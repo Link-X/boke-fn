@@ -4,7 +4,9 @@
     "react",
     "stage-0"
   ],
-  "plugins": ["transform-runtime", ["import", {
+  "plugins": [
+    "transform-runtime",
+    ["import", {
     "libraryName": "antd",
     "libraryDirectory": "es",
     "style": "css"
