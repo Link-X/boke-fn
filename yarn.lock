@@ -6091,11 +6091,6 @@ vm-browserify@0.0.4:
   dependencies:
     indexof "0.0.1"
 
-vue-qr@^2.1.0:
-  version "2.1.0"
-  resolved "https://registry.yarnpkg.com/vue-qr/-/vue-qr-2.1.0.tgz#82b642b93d86c9b8892c5e04cb0f9041d5372c75"
-  integrity sha512-OZI1eFEeg+8gf0+zt5pcLuJ9Yo/S/7KIlCZPDXX76a4kh3q8sfSBgAN8E5v/Y7fHPkCttQc1zys/h6QHHDDOBQ==
-
 warning@^3.0.0:
   version "3.0.0"
   resolved "https://registry.yarnpkg.com/warning/-/warning-3.0.0.tgz#32e5377cb572de4ab04753bdf8821c01ed605b7c"
