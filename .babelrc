@@ -9,26 +9,26 @@
     ["import", {
     "libraryName": "antd",
     "libraryDirectory": "es",
-    "style": "css"
+    "style": true
   }]],
-  "env": {
-    "development": {
-      "plugins": [
-        [
-          "react-transform",
-          {
-            "transforms": [{
-              "transform": "react-transform-hmr",
-              "imports": [
-                "react"
-              ],
-              "locals": [
-                "module"
-              ]
-            }]
-          }
-        ]
-      ]
-    }
-  }
+  // "env": {
+  //   "development": {
+  //     "plugins": [
+  //       [
+  //         "react-transform",
+  //         {
+  //           "transforms": [{
+  //             "transform": "react-transform-hmr",
+  //             "imports": [
+  //               "react"
+  //             ],
+  //             "locals": [
+  //               "module"
+  //             ]
+  //           }]
+  //         }
+  //       ]
+  //     ]
+  //   }
+  // }
 }

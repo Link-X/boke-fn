@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Button, WhiteSpace, WingBlank } from 'antd-mobile';
+import { DatePicker } from 'antd';
 
 class Chat extends Component {
     constructor (props) {
@@ -7,7 +7,9 @@ class Chat extends Component {
     }
     render () {
         return (
-          <div>chat</div>
+          <div>
+            <DatePicker></DatePicker>
+          </div>
         )
     }
 }

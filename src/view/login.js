@@ -1,14 +1,16 @@
 import React, { Component } from 'react';
-
+import '@/common/less/login.less'
 class Login extends Component {
     constructor(props) {
         super(props)
     }
     render() {
         return (
-            <div>login</div>
+            <div className="login-box">
+                
+            </div>
         )
     }
 }
 
-export default Login 
+export default Login

@@ -1,5 +1,11 @@
 import React, { Component } from 'react';
-import { Button, WhiteSpace, WingBlank } from 'antd-mobile';
+import { Button } from 'antd';
+
+const locale = {
+  prevText: 'Prev',
+  nextText: 'Next',
+};
+
 
 class Test extends Component {
     constructor (props) {
@@ -7,7 +13,9 @@ class Test extends Component {
     }
     render () {
         return (
-          <div>test</div>
+          <div>
+            <Button>123</Button>
+          </div>
         )
     }
 }

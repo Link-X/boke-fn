@@ -25,4 +25,4 @@ const hotMiddleware = webpackHotMiddleware(compiler, {
 app.use(devMiddleware)
 app.use(hotMiddleware)
 
-app.listen(3009, () => console.log('http://localhost:3009'))
+app.listen(3011, () => console.log('http://localhost:3009'))
