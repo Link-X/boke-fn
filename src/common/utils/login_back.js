@@ -4,7 +4,7 @@ const defaultOptions = {
     // How much to dampen the movement (higher is slower)
     dampenFactor: 36
 };
-const setImageBackground = (el, options) => {
+export const setImageBackground = (el, options) => {
      // To avoid scope issues, use 'base' instead of 'this'
       // to reference this class from internal events and functions.
       var base = {};
@@ -45,7 +45,7 @@ const setImageBackground = (el, options) => {
       }
   
       function bindEvents(){
-        base.addEventListener('mousemove', function(e){
+        base.el.addEventListener('mousemove', function(e){
             var width = base.options.movementFactor / base.width;
             var height = base.options.movementFactor / base.height;
             var cursorX = e.pageX - (document.body.clientWidth / 2);
@@ -78,5 +78,3 @@ const setImageBackground = (el, options) => {
   
       base.init();
 }
-  
-  

@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import '@/common/less/login.less'
 import { Form, Icon, Input, Button, Checkbox  } from 'antd'
+import { setImageBackground } from '@/common/utils/login_back.js'
 
 class NormalLoginForm extends Component {
     handleSubmit = e => {
@@ -62,7 +63,8 @@ class Login extends Component {
         super(props)
     }
     componentDidMount() {
-        console.log(this.$ref.loginBox)
+        setImageBackground(this.refs.loginBox)
+        console.log(this.refs.loginBox)
     }
     handleSubmit = e => {
         e.preventDefault()
