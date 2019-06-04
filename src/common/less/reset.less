@@ -58,11 +58,13 @@ progress {
     margin: 0;
     padding: 0;
     border: 0;
-    vertical-align: baseline
+    vertical-align: baseline;
+    box-sizing: border-box;
 }
 
 ul,li {
-    list-style: none
+    list-style: none;
+    box-sizing: border-box;
 }
 
 article,
@@ -77,14 +79,16 @@ menu,
 nav,
 section,
 summary {
-    display: block
+    display: block;
+    box-sizing: border-box;
 }
 
 audio,
 canvas,
 progress,
 video {
-    display: inline-block
+    display: inline-block;
+    box-sizing: border-box;
 }
 
 audio:not([controls]) {
@@ -99,7 +103,8 @@ template {
 
 a {
     background-color: transparent;
-    text-decoration: none
+    text-decoration: none;
+    box-sizing: border-box;
 }
 
 a:active,
@@ -189,7 +194,8 @@ textarea {
     font: inherit;
     margin: 0;
     outline: none;
-    line-height: normal
+    line-height: normal;
+    box-sizing: border-box;
 }
 
 button {
@@ -278,7 +284,7 @@ th {
 #app {
     width: 100%;
     height: 100%;
-    div {
+    >div {
         width: 100%;
         height: 100%;   
     }
