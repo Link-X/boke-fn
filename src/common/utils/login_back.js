@@ -1,28 +1,22 @@
 const defaultOptions = {
-    // How fast the background moves
+    // 执行速度，越低越慢
     movementFactor: 50,
-    // How much to dampen the movement (higher is slower)
+    // 背景移动速度，越高越慢
     dampenFactor: 36
 };
 export const setImageBackground = (el, options) => {
-     // To avoid scope issues, use 'base' instead of 'this'
-      // to reference this class from internal events and functions.
       var base = {};
       base.width = el.getBoundingClientRect().width
       base.height = el.getBoundingClientRect().height
-      // Access to jQuery and DOM versions of element
       base.el = el;
-  
-      // Add a reverse reference to the DOM object
-    //   base.$el.data("iosParallax", base);
-  
       var centerCoordinates = {x: 0, y: 0};
       var targetCoordinates = {x: 0, y: 0};
       var transitionCoordinates = {x: 0, y: 0};
   
       function getBackgroundImageUrl(){
-        var backgroundImage = base.el.style.backgroundImage.match(/url\(.*\)/ig);
-        if ( ! backgroundImage || backgroundImage.length < 1) {
+        var styles = window.getComputedStyle(base.el)
+        var backgroundImage = styles.backgroundImage.match(/url\(.*\)/ig);
+        if ( !backgroundImage || backgroundImage.length < 1) {
           throw 'No background image found';
         }
         return backgroundImage[0].replace(/url\(|'|"|'|"|\)$/ig, "");
@@ -49,11 +43,10 @@ export const setImageBackground = (el, options) => {
             var width = base.options.movementFactor / base.width;
             var height = base.options.movementFactor / base.height;
             var cursorX = e.pageX - (document.body.clientWidth / 2);
-            var cursorY = e.pageY - (document.body.clientWidth / 2);
+            var cursorY = e.pageY - (document.body.clientHeight / 2);
             targetCoordinates.x = width * cursorX * -1 + centerCoordinates.x;
             targetCoordinates.y = height * cursorY * -1 + centerCoordinates.y;
         })
-        // Slowly converge the background image position to the target coordinates in 60 FPS
         var loop = setInterval(function(){
           transitionCoordinates.x += ((targetCoordinates.x - transitionCoordinates.x) / base.options.dampenFactor);
           transitionCoordinates.y += ((targetCoordinates.y - transitionCoordinates.y) / base.options.dampenFactor);
@@ -63,7 +56,6 @@ export const setImageBackground = (el, options) => {
             setCenterCoordinates();
         })
   
-        // There's a problem with getting image height and width when the image isn't loaded.
         var img = new Image;
         img.src = getBackgroundImageUrl();
         img.onload = function () {

@@ -64,7 +64,7 @@ class Login extends Component {
     }
     componentDidMount() {
         setImageBackground(this.refs.loginBox)
-        console.log(this.refs.loginBox)
+        // console.log(this.refs.loginBox)
     }
     handleSubmit = e => {
         e.preventDefault()
