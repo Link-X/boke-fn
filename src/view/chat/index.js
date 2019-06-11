@@ -1,23 +1,17 @@
 import React, { Component } from 'react';
-import { Button } from 'antd';
+import { DatePicker } from 'antd';
 
-const locale = {
-  prevText: 'Prev',
-  nextText: 'Next',
-};
-
-
-class Test extends Component {
+class Chat extends Component {
     constructor (props) {
         super(props)
     }
     render () {
         return (
           <div>
-            <Button>123</Button>
+            <DatePicker></DatePicker>
           </div>
         )
     }
 }
 
-export default Test
+export default Chat

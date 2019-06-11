@@ -28,19 +28,19 @@ export const setImageBackground = (el, options = {}) => {
         var img = new Image;
         img.src = getBackgroundImageUrl();
         img.onload = function() {
-          console.log(img.width, img.height, base);
           cb({width: img.width, height: img.height})
         }
       }
   
       function setCenterCoordinates(){
-        var bgImgSize = getBackgroundImageSize(function(bgImgSize) {
+        getBackgroundImageSize(function(bgImgSize) {
             centerCoordinates.x = -1 * Math.abs(bgImgSize.width - base.width) / 2;
             centerCoordinates.y = -1 * Math.abs(bgImgSize.height - base.height) / 2;
             targetCoordinates.x = centerCoordinates.x;
             targetCoordinates.y = centerCoordinates.y;
             transitionCoordinates.x = centerCoordinates.x;
             transitionCoordinates.y = centerCoordinates.y;
+            moverDom()
         });
       }
   
@@ -52,23 +52,28 @@ export const setImageBackground = (el, options = {}) => {
             var cursorY = e.pageY - (document.body.clientHeight / 2);
             targetCoordinates.x = width * cursorX * -1 + centerCoordinates.x;
             targetCoordinates.y = height * cursorY * -1 + centerCoordinates.y;
-        })
-        var loop = setInterval(function(){
-          transitionCoordinates.x += ((targetCoordinates.x - transitionCoordinates.x) / base.options.dampenFactor);
-          transitionCoordinates.y += ((targetCoordinates.y - transitionCoordinates.y) / base.options.dampenFactor);
-          base.el.style.backgroundPosition = transitionCoordinates.x+"px "+transitionCoordinates.y+"px"
-        }, 16);
-        window.addEventListener('resize', function () {
+            transitionCoordinates.x += ((targetCoordinates.x - transitionCoordinates.x) / base.options.dampenFactor);
+            transitionCoordinates.y += ((targetCoordinates.y - transitionCoordinates.y) / base.options.dampenFactor);
+            base.el.style.backgroundPosition = transitionCoordinates.x+"px "+transitionCoordinates.y+"px"
+            moverDom()
+          })
+          // var loop = setInterval(function(){
+          // }, 16);
+          window.addEventListener('resize', function () {
             setCenterCoordinates();
-        })
-  
-        var img = new Image;
-        img.src = getBackgroundImageUrl();
-        img.onload = function () {
+          })
+          
+          var img = new Image;
+          img.src = getBackgroundImageUrl();
+          img.onload = function () {
             setCenterCoordinates();
-        }
+          }
       };
-  
+      function moverDom () {
+        transitionCoordinates.x += ((targetCoordinates.x - transitionCoordinates.x) / base.options.dampenFactor);
+        transitionCoordinates.y += ((targetCoordinates.y - transitionCoordinates.y) / base.options.dampenFactor);
+        base.el.style.backgroundPosition = transitionCoordinates.x+"px "+transitionCoordinates.y+"px"
+      }
       base.init = function(){
         base.options = {...defaultOptions, ...options}
         bindEvents();
