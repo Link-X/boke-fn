@@ -1,10 +1,12 @@
+/** 
+ * movementFactor移动距离
+ * dampenFactor 移动速度
+*/
 const defaultOptions = {
-    // 执行速度，越低越慢
     movementFactor: 50,
-    // 背景移动速度，越高越慢
     dampenFactor: 36
 };
-export const setImageBackground = (el, options) => {
+export const setImageBackground = (el, options = {}) => {
       var base = {};
       base.width = el.getBoundingClientRect().width
       base.height = el.getBoundingClientRect().height
@@ -22,20 +24,24 @@ export const setImageBackground = (el, options) => {
         return backgroundImage[0].replace(/url\(|'|"|'|"|\)$/ig, "");
       }
   
-      function getBackgroundImageSize(){
+      function getBackgroundImageSize(cb){
         var img = new Image;
         img.src = getBackgroundImageUrl();
-        return {width: img.width, height: img.height};
+        img.onload = function() {
+          console.log(img.width, img.height, base);
+          cb({width: img.width, height: img.height})
+        }
       }
   
       function setCenterCoordinates(){
-        var bgImgSize = getBackgroundImageSize();
-        centerCoordinates.x = -1 * Math.abs(bgImgSize.width - base.width) / 2;
-        centerCoordinates.y = -1 * Math.abs(bgImgSize.height - base.height) / 2;
-        targetCoordinates.x = centerCoordinates.x;
-        targetCoordinates.y = centerCoordinates.y;
-        transitionCoordinates.x = centerCoordinates.x;
-        transitionCoordinates.y = centerCoordinates.y;
+        var bgImgSize = getBackgroundImageSize(function(bgImgSize) {
+            centerCoordinates.x = -1 * Math.abs(bgImgSize.width - base.width) / 2;
+            centerCoordinates.y = -1 * Math.abs(bgImgSize.height - base.height) / 2;
+            targetCoordinates.x = centerCoordinates.x;
+            targetCoordinates.y = centerCoordinates.y;
+            transitionCoordinates.x = centerCoordinates.x;
+            transitionCoordinates.y = centerCoordinates.y;
+        });
       }
   
       function bindEvents(){
