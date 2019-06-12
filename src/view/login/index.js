@@ -10,7 +10,7 @@ class NormalLoginForm extends Component {
         this.props.form.validateFields((err, values) => {
             if (!err) {
                 console.log(get)
-                get('get/article').then(res => {
+                get('/get/article/list').then(res => {
                     console.log(res)
                 })
             }

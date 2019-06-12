@@ -1,8 +1,7 @@
 import axios from 'axios'
 import { message } from 'antd';
-const path = 'http://127.0.0.1:3010'
 const http = axios.create({
-    baseURL: `${path}/api/`
+    baseURL: `/api/`
 })
 
 http.interceptors.request.use((config) => {
@@ -12,12 +11,19 @@ http.interceptors.request.use((config) => {
     return Promise.reject(error)
 })
 
-http.interceptors.response.use((res) => {
+http.interceptors.response.use((data) => {
+    const res = {...{data: {code: -1, data: {}}}, ...data}
+    if (res.data.code === 0) {
+        return res
+    }
+    if (res.data.code === -1) {
+        message.error(res.data.message)
+    }
     if (res.data.code === '0001') {
-        message.info('未登陆，请登陆账号')
+        message.error('未登陆，请登陆账号')
         return Promise.reject(res)
     }
-    return res
+    return {}
 })
 
 export const get = (url, opt = { params: {} }) => {
