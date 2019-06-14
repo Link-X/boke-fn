@@ -17,6 +17,7 @@ class Banner extends Component {
                 if (len >= msg.length) {
                     clearInterval(intverId)
                     clearInterval(intverId2)
+                    return
                 }
                 message = message && message.map((v = {}) => {
                     v.class = ''
@@ -24,13 +25,15 @@ class Banner extends Component {
                 })
                 message.push({
                     val: msg.substring(len, len + 1),
-                    class: 'opDom'
+                    class: ''
                 })
                 this.setState({
                     message
                 })
-                intverId2 = this.flashing()
-            }, 3300)
+                if (len < msg.length - 1) {
+                    intverId2 = this.flashing()
+                }
+            }, 2600)
         }
         this.flashing = () => {
             const intverId2 = setInterval(() => {
@@ -41,7 +44,7 @@ class Banner extends Component {
                 this.setState({
                     message
                 })
-            }, 700)
+            }, 550)
             return intverId2
         }
     }
