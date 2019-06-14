@@ -1,0 +1,24 @@
+{
+    "headerNav": [
+        {
+            "label": "文章",
+            "value": 1
+        },
+        {
+            "label": "动态",
+            "value": 2
+        },
+        {
+            "label": "相册",
+            "value": 3
+        },
+        {
+            "label": "聊天",
+            "value": 4
+        },
+        {
+            "label": "code",
+            "value": 5
+        }
+    ]
+}

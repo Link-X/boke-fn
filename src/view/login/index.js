@@ -1,17 +1,22 @@
 import React, { Component } from 'react';
 import '@/common/less/login.less'
-import { Form, Icon, Input, Button, Checkbox  } from 'antd'
+import { Form, Icon, Input, Button, Checkbox, message  } from 'antd'
 import { setImageBackground } from '@/common/utils/login_back.js'
-import { get } from '@/common/utils/http.js'
+import { login } from '@/js/api'
+
 
 class NormalLoginForm extends Component {
     handleSubmit = e => {
         e.preventDefault();
         this.props.form.validateFields((err, values) => {
             if (!err) {
-                console.log(get)
-                get('/get/article/list').then(res => {
+                login(this.state.form).then(res => {
                     console.log(res)
+                    if (res && res.data) {
+                        localStorage.setItem('token',res.data.token)
+                        message.success('登陆成功')
+                        this.props.history.push("/");
+                    }
                 })
             }
         });
@@ -25,6 +30,7 @@ class NormalLoginForm extends Component {
                 remember: true
             }
         }
+        console.log(this.props.history)
         this.setInp = function (type, val) {
             const form = { ...this.state.form }
             form[type] = val
@@ -39,10 +45,10 @@ class NormalLoginForm extends Component {
         return (
         <Form onSubmit={this.handleSubmit} className='form_box'>
             <Form.Item>
-                {getFieldDecorator('username', {
+                {getFieldDecorator('userName', {
                     rules: [{ required: true, message: '请输入你的登陆账号!' }],
                     getValueFromEvent: (e) => {
-                        this.setInp('username', e.target.value)
+                        this.setInp('userName', e.target.value)
                         return e.target.value
                     }
                 })(
@@ -88,7 +94,13 @@ class NormalLoginForm extends Component {
                         登陆
                     </Button>
                 </div>
-                <a href='' style={{ textAlign: 'center', display: 'inline-block', width: '100%' }}>登陆即可完成注册!</a>
+                <a href='' style={{
+                    textAlign: 'center',
+                    display: 'inline-block',
+                    width: '100%' 
+                }}>
+                    登陆即可完成注册!
+                </a>
             </Form.Item>
         </Form>
         );
@@ -102,7 +114,6 @@ class Login extends Component {
     }
     componentDidMount() {
         setImageBackground(this.refs.loginBox)
-        // console.log(this.refs.loginBox)
     }
     handleSubmit = e => {
         e.preventDefault()
@@ -116,7 +127,9 @@ class Login extends Component {
         return (
             <div className='login-box' ref='loginBox'>
                 <div className='login-form'>
-                    <WrappedNormalLoginForm></WrappedNormalLoginForm>
+                    <WrappedNormalLoginForm 
+                        history={this.props.history}>
+                    </WrappedNormalLoginForm>
                 </div>
             </div>
         )

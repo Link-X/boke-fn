@@ -5,7 +5,9 @@ const http = axios.create({
 })
 
 http.interceptors.request.use((config) => {
-    config.headers.token = localStorage.getItem('token') || ''
+    if (config.headers.auth) {
+        config.headers.token = localStorage.getItem('token') || ''
+    }
     return config
 }, (err) => {
     return Promise.reject(error)
@@ -27,11 +29,21 @@ http.interceptors.response.use((data) => {
 })
 
 export const get = (url, opt = { params: {} }) => {
-    return http.get(url, opt)
+    return http.get(url, {
+        params: opt.params,
+        headers: {
+            auth: opt.auth
+        }
+    })
 }
 
-export const post = (url, data, opt = { params: {} }) => {
-    return http.post(url, data, opt)
+export const post = (url, data) => {
+    return http.post(url,
+        data.params, {
+        headers: {
+            auth: data.auth
+        }
+    })
 }
 
 export default http
