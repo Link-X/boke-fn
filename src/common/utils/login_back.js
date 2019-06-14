@@ -7,17 +7,17 @@ const defaultOptions = {
     dampenFactor: 36
 };
 export const setImageBackground = (el, options = {}) => {
-      var base = {};
+      const base = {};
       base.width = el.getBoundingClientRect().width
       base.height = el.getBoundingClientRect().height
       base.el = el;
-      var centerCoordinates = {x: 0, y: 0};
-      var targetCoordinates = {x: 0, y: 0};
-      var transitionCoordinates = {x: 0, y: 0};
+      const centerCoordinates = {x: 0, y: 0};
+      const targetCoordinates = {x: 0, y: 0};
+      const transitionCoordinates = {x: 0, y: 0};
   
       function getBackgroundImageUrl(){
-        var styles = window.getComputedStyle(base.el)
-        var backgroundImage = styles.backgroundImage.match(/url\(.*\)/ig);
+        const styles = window.getComputedStyle(base.el)
+        const backgroundImage = styles.backgroundImage.match(/url\(.*\)/ig);
         if ( !backgroundImage || backgroundImage.length < 1) {
           throw 'No background image found';
         }
@@ -25,7 +25,7 @@ export const setImageBackground = (el, options = {}) => {
       }
   
       function getBackgroundImageSize(cb){
-        var img = new Image;
+        const img = new Image;
         img.src = getBackgroundImageUrl();
         img.onload = function() {
           cb({width: img.width, height: img.height})
@@ -46,10 +46,10 @@ export const setImageBackground = (el, options = {}) => {
   
       function bindEvents(){
         base.el.addEventListener('mousemove', function(e){
-            var width = base.options.movementFactor / base.width;
-            var height = base.options.movementFactor / base.height;
-            var cursorX = e.pageX - (document.body.clientWidth / 2);
-            var cursorY = e.pageY - (document.body.clientHeight / 2);
+            const width = base.options.movementFactor / base.width;
+            const height = base.options.movementFactor / base.height;
+            const cursorX = e.pageX - (document.body.clientWidth / 2);
+            const cursorY = e.pageY - (document.body.clientHeight / 2);
             targetCoordinates.x = width * cursorX * -1 + centerCoordinates.x;
             targetCoordinates.y = height * cursorY * -1 + centerCoordinates.y;
             transitionCoordinates.x += ((targetCoordinates.x - transitionCoordinates.x) / base.options.dampenFactor);
@@ -63,7 +63,7 @@ export const setImageBackground = (el, options = {}) => {
             setCenterCoordinates();
           })
           
-          var img = new Image;
+          const img = new Image;
           img.src = getBackgroundImageUrl();
           img.onload = function () {
             setCenterCoordinates();
