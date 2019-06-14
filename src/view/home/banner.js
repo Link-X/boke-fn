@@ -55,14 +55,17 @@ class Banner extends Component {
         const { message } = this.state
         return (
             <div className="xdb-home_banner">
-                <div>美好的生命应该充满期待、惊喜和感激。</div>
-                <div>有理{
-                    message.map((v, i) => {
-                        return (
-                            <span key={i} className={`banner_tip ${v && v.class}`}>{v && v.val}</span>
-                        )
-                    })
-                }</div>
+                <div className="xdb-home_tip">
+                    <div className="home-tip_top">美好的生命应该充满期待、惊喜和感激。</div>
+                    <div className="home-tip_bottom">有理{
+                        message.map((v, i) => {
+                            return (
+                                <span key={i} className={`banner_tip ${v && v.class}`}>{v && v.val}</span>
+                            )
+                        })
+                    }
+                    </div>
+                </div>
             </div>
         )
     }

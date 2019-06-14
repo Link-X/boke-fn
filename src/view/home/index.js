@@ -11,6 +11,7 @@ class Home extends Component {
           <div className="xdb-home_box">
             <HeaderDom></HeaderDom>
             <Banner></Banner>
+            <Banner></Banner>
           </div>
         )
     }
