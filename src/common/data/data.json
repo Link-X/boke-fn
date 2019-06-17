@@ -1,11 +1,11 @@
 {
     "headerNav": [
         {
-            "label": "文章",
+            "label": "首页",
             "value": 1
         },
         {
-            "label": "动态",
+            "label": "文章",
             "value": 2
         },
         {

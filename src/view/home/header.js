@@ -9,7 +9,6 @@ class HeaderDom extends Component {
         this.state = {
             activeIndex: 1,
             navList: headerNav,
-            headerClass: '',
             navIcon: '',
             navBoxCalss: ''
         }
@@ -28,19 +27,6 @@ class HeaderDom extends Component {
                 type: 'agent',
                 typeNodeName: 'LI'
             })
-            window.addEventListener('scroll', () => {
-                if (document.documentElement.scrollTop >= 100 && !this.state.headerClass) {
-                   this.setState({
-                        headerClass: 'xdb_home_header_and',
-                        navIcon: '',
-                        navBoxCalss: ''
-                   })
-                } else if (document.documentElement.scrollTop < 100 && this.state.headerClass){
-                    this.setState({
-                        headerClass: '',
-                    })
-                }
-             })
         }
         this.showNav = function () {
             const { navIcon, navBoxCalss } = this.state
@@ -59,9 +45,9 @@ class HeaderDom extends Component {
     }
     render () {
         return (
-            <nav className={`xdb-home_header ${this.state.headerClass}`}>
-                <div className="home-header_concent">
-                    <a>xdb</a>    
+            <nav className={`xdb-home_header ${this.props.boxIndex === 0 ? '' : 'xdb_home_header_and'}`}>
+                <div className="home-header_concent" data-ind={this.props.boxIndex}>
+                    <h2 className="home-header_login">xdb</h2>    
                     <div className={`header-nav-collapse ${this.state.navBoxCalss}`}>
                         <ul ref="uli" className="nav-collapse_ul" onClick={(e) => { this.tabNav(e) }}>
                             {
