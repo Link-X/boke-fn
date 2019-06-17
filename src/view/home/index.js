@@ -13,10 +13,8 @@ class Home extends Component {
           startAnmit: true,
           maxDom: 2
         }
-        this.scrollPageDom = () => {
 
-        }
-        this.scrollPage = () => {
+        this.stopScroll = () => {
           const taht = this
           const transitions = {
             // 兼容IE
@@ -36,38 +34,49 @@ class Home extends Component {
               }
             }
           }
-          window.onmousewheel = document.onmousewheel = (e) => {
-            let { startAnmit, boxIndex, maxDom } = this.state
-            if (!startAnmit) {
-              return
-            }
-            if (e.wheelDelta > 0 && boxIndex > 0) {
-              boxIndex -= 1
-            } else if (e.wheelDelta < 0 && boxIndex < (maxDom - 1)) {
-              boxIndex += 1
-            }
-            this.setState({
-              boxIndex,
-              boxStyle: {
-                transform: `translate3d(0px, -${boxIndex * 100}%, 0px)`
-              },
-              startAnmit: false
-            }, () => {
-              const { boxIndex, maxDom } = this.state
-              if (boxIndex === (maxDom - 1) || boxIndex === 0) {
-                setTimeout(() => {
-                  this.setState({
-                    startAnmit: true
-                  })
-                }, 500)
-              }
-            })
-          }
           const eventName = getTransitions()
           this.refs.homeBox.addEventListener(eventName, function() {
             taht.setState({
               startAnmit: true
             })
+          })
+        }
+        this.scrollPage = () => {
+          const whellFunc = (ev) => {
+            const e = ev || window.event;
+            let { startAnmit, boxIndex, maxDom } = this.state
+            if (!startAnmit) {
+              return
+            }
+            if ((e.wheelDelta === 120 || e.detail === -3) && boxIndex > 0) {
+              this.upDom('up')
+            } else if ((e.wheelDelta === -120 || e.detail === 3) && boxIndex < (maxDom - 1)) {
+              this.upDom('down')
+            }
+          } 
+          window.onmousewheel = document.onmousewheel = whellFunc
+          document.addEventListener('DOMMouseScroll',whellFunc, false)
+          this.stopScroll()
+        }
+        this.upDom = (type) => {
+          let { boxIndex } = this.state
+          const sum = type === 'up' ? -1 : 1
+          boxIndex += sum
+          this.setState({
+            boxIndex,
+            boxStyle: {
+              transform: `translate3d(0px, -${boxIndex * 100}%, 0px)`
+            },
+            startAnmit: false
+          }, () => {
+            const { boxIndex, maxDom } = this.state
+            if (boxIndex === (maxDom - 1) || boxIndex === 0) {
+              setTimeout(() => {
+                this.setState({
+                  startAnmit: true
+                })
+              }, 500)
+            }
           })
         }
     }

@@ -10,12 +10,6 @@ class Center extends Component {
         return (
             <div className="home-center page2">
                 <div className="home-center_box">
-                    <Icon type="left" style={{
-                        fontSize: "36px",
-                        color: '#fff',
-                        cursor: 'pointer',
-                        fontWeight: 'bold'
-                    }} />
                     <div className="center-box">
                         <h2 className="center-box_title">
                             Hi,你好！ 我是
@@ -28,18 +22,17 @@ class Center extends Component {
                                 <span>Css</span>
                                 <span>JS</span>
                                 <span>Node</span>
-                                <span>以及更改多？...</span>
+                                <span>以及更改多...</span>
                             </div>
                             快加入我们，一起分享把
-                            <a>注册</a>
+                            <a href="/login"> 注册</a>
                         </article>
                     </div>
-                    <Icon type="right" style={{
-                        fontSize: "36px",
-                        color: '#fff',
-                        cursor: 'pointer',
-                        fontWeight: 'bold'
-                    }} />
+                    <ul className="center-box_btn">
+                        <li></li>
+                        <li></li>
+                        <li></li>
+                    </ul>
                 </div>
             </div>
         )
