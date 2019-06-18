@@ -10,28 +10,34 @@ class Banner extends Component {
         }
         this.showMessage = () => {
             let intverId2 = null
-            let intverId =
-
-            setTimeout(() => {
-                intverId = setInterval(() => {
-                    clearInterval(intverId2)
-                    const msg = '想在的地方，地狱就是天堂。'
-                    let { message } = this.state
+            let intverId = null
+            let tim = 1
+            let time = 400
+            const that = this
+            const msg = '想在的地方，地狱就是天堂。'
+            function timeDom () { 
+                intverId = setTimeout(() => {
+                    let { message } = that.state
                     const len = message.length
                     if (len >= msg.length) {
-                        clearInterval(intverId2)
-                        clearInterval(intverId)
-                        this.setState({
+                        clearTimeout(intverId)
+                        that.setState({
                             tipOption: 'tip-opacity'
                         })
                         return
                     }
                     message += msg.substring(len, len + 1)
-                    this.setState({
+                    that.setState({
                         message,
                         tipOption: ''
                     })
-                }, 300)
+                    time -= tim += 4
+                    timeDom()
+                }, time)
+            }
+            setTimeout(() => {
+                clearInterval(intverId2)
+                timeDom()
             }, 3000)
             intverId2 = this.flashing()
         }
