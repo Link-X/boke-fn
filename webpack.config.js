@@ -68,7 +68,7 @@ module.exports = {
     port: 3011, // 设置默认监听端口，如果省略，默认为"8080"
     proxy: {
       '/api': {
-        target: 'http://127.0.0.1:3012/',
+        target: 'http://127.0.0.1:80/',
         changeOrigin: true,
         cookieDomainRewrite: {
           '*': ''

@@ -15,7 +15,7 @@ class NormalLoginForm extends Component {
                     if (res && res.data) {
                         localStorage.setItem('token',res.data.token)
                         message.success('登陆成功')
-                        this.props.history.push("/");
+                        this.props.history.push("/")
                     }
                 })
             }
