@@ -15,7 +15,7 @@ module.exports = {
     main: entry
   },
   output: {
-    path: path.resolve(__dirname, 'dist'),
+    path: path.resolve('D:/aly/www/www', 'dist'),
     filename: 'main.js'
   },
   module: {
