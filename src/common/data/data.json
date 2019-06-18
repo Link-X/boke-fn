@@ -2,23 +2,28 @@
     "headerNav": [
         {
             "label": "首页",
-            "value": 1
+            "value": 1,
+            "url": "/"
         },
         {
             "label": "文章",
-            "value": 2
+            "value": 2,
+            "url": "/article"
         },
         {
             "label": "相册",
-            "value": 3
+            "value": 3,
+            "url": "/photo"
         },
         {
             "label": "聊天",
-            "value": 4
+            "value": 4,
+            "url": "/chat"
         },
         {
             "label": "code",
-            "value": 5
+            "value": 5,
+            "url": "/code"
         }
     ]
 }

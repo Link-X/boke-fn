@@ -25,10 +25,10 @@ class Center extends Component {
                                     <li>Css</li>
                                     <li>JS</li>
                                     <li>Node</li>
-                                    <li>以及更改多.....</li>
+                                    <li>以及更多.....</li>
                                 </ul>
-                                 快加入我们，一起分享把
-                                <a href="/login">注册</a>
+                                 快加入我们，一起分享把&nbsp;
+                                <a href="#/login">注册</a>
                             </TabPane>
                             <TabPane tab="" key="2" className="center-box_article">
                                 <ul className="box-article_list">

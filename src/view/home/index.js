@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import HeaderDom from './header.js'
 import Banner from './banner.js'
 import Center from './center.js'
+import { message } from 'antd'
 class Home extends Component {
     constructor (props) {
         super(props)
@@ -79,14 +80,24 @@ class Home extends Component {
             }
           })
         }
+        this.clickTab = (url) => {
+          if (this.props.match.url === url) {
+            return
+          }
+          const hide = message.loading('Action in progress..', 0);
+          setTimeout(() => {
+            hide()
+            this.props.history.push(url)
+          }, 1000);
+        }
     }
     componentDidMount () {
       this.scrollPage()
     }
     render () {
         return (
-          <div style={{overflow: 'hidden'}}>
-            <HeaderDom boxIndex={this.state.boxIndex}></HeaderDom>
+          <div className="xdb-home-center">
+            <HeaderDom boxIndex={this.state.boxIndex}  clickTab={this.clickTab}></HeaderDom>
             <div className="xdb-home_box" style={this.state.boxStyle} ref="homeBox">
               <Banner></Banner>
               <Center></Center>

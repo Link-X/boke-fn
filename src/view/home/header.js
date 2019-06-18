@@ -17,10 +17,11 @@ class HeaderDom extends Component {
                 return
             }
             const index = e.target.getAttribute('data-value')
-            console.log(index)
+            const url = e.target.getAttribute('data-url')
             this.setState({
                 activeIndex: Number(index)
             })
+            this.props.clickTab(url)
          }
          this.init = function () { 
             setBtnAnt(this.refs.uli, {
@@ -39,10 +40,6 @@ class HeaderDom extends Component {
     componentDidMount () {
         this.init()
     }
-    componentWillUnmount () {
-        window.onscroll = null
-        this.refs.uli.onClick = null
-    }
     render () {
         return (
             <nav className={`xdb-home_header ${this.props.boxIndex === 0 ? '' : 'xdb_home_header_and'}`}>
@@ -57,6 +54,7 @@ class HeaderDom extends Component {
                                             ref={'li' + v.value}
                                             key={v.value}
                                             data-value={v.value}
+                                            data-url={v.url}
                                             className={v.value === this.state.activeIndex ? 'active' : ''}>
                                             {v.label}
                                         </li>
