@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
 import HeaderDom from './header.js'
-import Banner from './banner.js'
-import Center from './center.js'
-import { message } from 'antd'
+import Banner from './banner/index.js'
+import Center from './center/index.js'
+
+import Article from './article/index.js'
 class Home extends Component {
     constructor (props) {
         super(props)
@@ -12,7 +13,8 @@ class Home extends Component {
           },
           boxIndex: 0,
           startAnmit: true,
-          maxDom: 2
+          maxDom: 2,
+          history: '/'
         }
 
         this.stopScroll = () => {
@@ -81,14 +83,12 @@ class Home extends Component {
           })
         }
         this.clickTab = (url) => {
-          if (this.props.match.url === url) {
+          if (this.state.history === url) {
             return
           }
-          const hide = message.loading('Action in progress..', 0);
-          setTimeout(() => {
-            hide()
-            this.props.history.push(url)
-          }, 1000);
+          this.setState({
+            history: url
+          })
         }
     }
     componentDidMount () {
@@ -98,9 +98,20 @@ class Home extends Component {
         return (
           <div className="xdb-home-center">
             <HeaderDom boxIndex={this.state.boxIndex}  clickTab={this.clickTab}></HeaderDom>
-            <div className="xdb-home_box" style={this.state.boxStyle} ref="homeBox">
-              <Banner></Banner>
-              <Center></Center>
+            { 
+                this.state.history === '/' &&  <div
+                className="xdb-home_box" 
+                style={this.state.boxStyle} 
+                ref="homeBox">
+                <Banner></Banner>
+                <Center></Center>
+              </div>
+            }
+            {
+                this.state.history === '/article' && <Article></Article>
+            }
+            <div>
+
             </div>
           </div>
         )
