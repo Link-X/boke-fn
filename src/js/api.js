@@ -7,3 +7,7 @@ export const login = (params = { userName: '' , password: ''}) => {
 export const getArticleList = (params = { page: 1, pageSize: 10 }) => {
     return get('/get/article/list', { params, auth: false }).then(res => res.data)
 }
+
+export const getTags = (parmas = {}) => {
+    return get('/get/tags', {}).then(res => res.data)
+}
