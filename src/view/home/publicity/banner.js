@@ -63,9 +63,11 @@ class Banner extends Component {
                     if (res && res.data && res.data.code === 0) {
                         const data = res.data && JSON.parse(res.data.data)
                         if (data && data.error_code === 0) {
-                            const info = data.result.realtime
+                            const weather = data.result.future[1].weather
+                            console.log(data.result.future[1])
                             Object.keys(weatherData).forEach(v => {
-                                const isDay = weatherData[v].some(j => j === info.info)
+                                const isDay = weatherData[v].some(j => j === weather)
+                                console.log(isDay, v, weather)
                                 if (isDay) {
                                     this.setState({
                                         dayType: v

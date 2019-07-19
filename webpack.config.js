@@ -15,7 +15,7 @@ module.exports = {
     main: entry
   },
   output: {
-    path: path.resolve('D:/aly/www/www', 'dist'),
+    path: path.resolve('D:/aly/www/www'),
     filename: 'main.js'
   },
   module: {
@@ -68,7 +68,7 @@ module.exports = {
     port: 3011, // 设置默认监听端口，如果省略，默认为"8080"
     proxy: {
       '/api': {
-        target: 'http://127.0.0.1:990/',
+        target: 'http://127.0.0.1:9008/',
         changeOrigin: true,
         cookieDomainRewrite: {
           '*': ''
