@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import HeaderDom from './header.js'
 import Publicity from './publicity/index.js'
-
 import Article from './article/index.js'
 class Home extends Component {
     constructor (props) {

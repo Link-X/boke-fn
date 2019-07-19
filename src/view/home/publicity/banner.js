@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import '@/common/less/home.less'
+import { Supermoon, Stormy, Cloudy, Sunny, Snowy } from '@/common/weather/index.js'
+import '@/common/less/home-index.less'
 
 class Banner extends Component {
     constructor(props) {
@@ -59,11 +61,17 @@ class Banner extends Component {
         return (
             <div className="xdb-home_banner page1">
                 <div className="xdb-home_tip">
-                    <div className="home-tip_top">美好的生命应该充满期待、惊喜和感激。</div>
-                    <div className="home-tip_bottom">
-                    有理{message}
-                    <span 
-                        className={`tip-cursor ${tipOption}`}></span>
+
+                    <div className="warther_box">
+                        <Snowy></Snowy>
+                    </div>
+                    <div className="warther_box_text">
+                        <div className="home-tip_top">美好的生命应该充满期待、惊喜和感激。</div>
+                        <div className="home-tip_bottom">
+                            有理{message}
+                        <span 
+                            className={`tip-cursor ${tipOption}`}></span>
+                        </div>
                     </div>
                 </div>
             </div>
