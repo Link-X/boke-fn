@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import '@/common/less/home.less'
 import { Supermoon, Stormy, Cloudy, Sunny, Snowy } from '@/common/weather/index.js'
+import { getSimpleWeather, getCity } from '@/js/api'
+import { weatherData } from '@/common/data/data.json'
 import '@/common/less/home-index.less'
 
 class Banner extends Component {
@@ -8,7 +10,8 @@ class Banner extends Component {
         super(props)
         this.state = {
             message: [],
-            tipOption: ''
+            tipOption: '',
+            dayType: 'Sunny'
         }
         this.showMessage = () => {
             let intverId2 = null
@@ -52,18 +55,46 @@ class Banner extends Component {
             }, 500)
             return intverId2
         }
+        this.getDayType = () => {
+            getCity().then(city => {
+                getSimpleWeather({
+                    city
+                }).then(res => {
+                    if (res && res.data && res.data.code === 0) {
+                        const data = res.data && JSON.parse(res.data.data)
+                        if (data && data.error_code === 0) {
+                            const info = data.result.realtime
+                            Object.keys(weatherData).forEach(v => {
+                                const isDay = weatherData[v].some(j => j === info.info)
+                                if (isDay) {
+                                    this.setState({
+                                        dayType: v
+                                    })
+                                    console.log(v);
+                                }
+                            })
+                        }
+                    }
+                })
+            })
+        }
     }
     componentDidMount () {
         this.showMessage()
+        this.getDayType()
     }
     render() {
-        const { message, tipOption } = this.state
+        const { message, tipOption, dayType } = this.state
         return (
             <div className="xdb-home_banner page1">
                 <div className="xdb-home_tip">
 
                     <div className="warther_box">
-                        <Snowy></Snowy>
+                        { dayType === 'Supermoon' && <Supermoon></Supermoon> }
+                        { dayType === 'Stormy' && <Stormy></Stormy> }
+                        { dayType === 'Cloudy' && <Cloudy></Cloudy> }
+                        { dayType === 'Sunny' && <Sunny></Sunny> }
+                        { dayType === 'Snowy' && <Snowy></Snowy> }
                     </div>
                     <div className="warther_box_text">
                         <div className="home-tip_top">美好的生命应该充满期待、惊喜和感激。</div>
