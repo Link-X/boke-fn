@@ -22,8 +22,8 @@ class Home extends Component {
         return (
           <div className="xdb-home-center">
             <HeaderDom boxIndex={this.state.boxIndex}  clickTab={this.clickTab}></HeaderDom>
-            { this.state.history === '/' &&  <Publicity></Publicity> }
-            { this.state.history === '/article' && <Article></Article> }
+            { this.state.history === '/article' &&  <Publicity></Publicity> }
+            { this.state.history === '/' && <Article></Article> }
             <div>
 
             </div>

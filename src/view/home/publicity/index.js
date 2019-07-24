@@ -17,13 +17,13 @@ class Home extends Component {
         this.stopScroll = () => {
           const taht = this
           const transitions = {
-            // 兼容IE
+            // IE
             'transition': 'transitionend',
-            // 兼容Opera
+            // Opera
             'OTransition': 'oTransitionEnd',
-            // 兼容Firefox
+            // Firefox
             'MozTransition': 'transitionend',
-            // 兼容Google
+            // chrome
             'WebkitTransition': 'webkitTransitionEnd'
           }
           function getTransitions() {

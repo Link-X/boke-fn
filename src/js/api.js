@@ -39,3 +39,7 @@ export const getCity = () => {
         }
     })
 }
+
+export const getArticle = () => {
+    return get('/get/article/list').then(res => res)
+}
