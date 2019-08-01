@@ -31,6 +31,11 @@ class Article extends Component {
                 }
             })
         }
+        this.goEditArticle = () => {
+            this.props.history.push({
+                pathname: '/edit-article'
+            })
+        }
         // <ul className="article-nav">
                     //     {
                     //         navData.map(v => {
@@ -89,7 +94,7 @@ class Article extends Component {
                             {
                                 list.list.map(v => {
                                     return (
-                                        <li className="center-text_li">
+                                        <li className="center-text_li" key={v.id}>
                                             <div className="text-li_left">
                                                 <img src={v.articleImg} />
                                                 <span className="article-tip_span">{v.title}</span>
@@ -104,6 +109,9 @@ class Article extends Component {
                             }
                         </ul>
                     </div>
+                </div>
+                <div className="article-edit-box">
+                    <i className="edit-article" onClick={this.goEditArticle}>+</i>
                 </div>
             </div>
         )

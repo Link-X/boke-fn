@@ -21,17 +21,12 @@ module.exports = {
   module: {
     rules: [
       {
-          test: /\.css$/,
-          use: ExtractTextPlugin.extract({
-            fallback: 'style-loader',
-            use: [
-                { 
-                    loader: 'css-loader', 
-                },
-                'postcss-loader'
-            ]
-        }),
-      },
+        test:/\.css$/,   
+        use: ExtractTextPlugin.extract({
+            use:"css-loader",
+            fallback:"style-loader",       
+        })
+      },  
       {
         test: /\.less$/,
         loader: 'style-loader!css-loader!less-loader',
@@ -85,6 +80,7 @@ module.exports = {
       },
       template: path.resolve(__dirname, './index.html')
     }),
+    new ExtractTextPlugin("styles.css"),
     new webpack.HotModuleReplacementPlugin()
   ],
   resolve: {

@@ -12,7 +12,7 @@ class HeaderDom extends Component {
             navIcon: '',
             navBoxCalss: ''
         }
-        this.tabNav = function (e) { 
+        this.tabNav = function (e) {
             if (e.target.nodeName !== 'LI') {
                 return
             }

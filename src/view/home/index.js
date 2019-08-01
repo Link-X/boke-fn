@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import HeaderDom from './header.js'
+import HeaderDom from './head/header.js'
 import Publicity from './publicity/index.js'
 import Article from './article/index.js'
 class Home extends Component {
@@ -22,8 +22,8 @@ class Home extends Component {
         return (
           <div className="xdb-home-center">
             <HeaderDom boxIndex={this.state.boxIndex}  clickTab={this.clickTab}></HeaderDom>
-            { this.state.history === '/article' &&  <Publicity></Publicity> }
-            { this.state.history === '/' && <Article></Article> }
+            { this.state.history === '/' &&  <Publicity></Publicity> }
+            { this.state.history === '/article' && <Article history={this.props.history}></Article> }
             <div>
 
             </div>

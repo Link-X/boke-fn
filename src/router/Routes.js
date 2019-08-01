@@ -5,6 +5,20 @@ import App from './../App.js'
 import Home from '@/view/home/index.js'
 import Chat from '@/view/chat/index.js'
 import Login from '@/view/login/index.js'
+import EditArticle from '@/view/home/article/edit-article.js'
+// const rootRoute = {
+//     path: '/xdb',
+//     getChildRoutes(location, cb) {
+//         cb(null, [
+//             {
+//                 path: '/chat',
+//                 onEnter: (r) => {
+//                     setTitle('俩套');
+//                 },
+//             }
+//         ])
+//     }
+// }
 const Root = () => (
     <HashRouter>
         <div>
@@ -17,6 +31,7 @@ const Root = () => (
                                 <Route path="/" exact component={ Home }></Route>
                                 <Route path="/chat" component={ Chat } />
                                 <Route path="/login" component={ Login } />
+                                <Route path="/edit-article" component={ EditArticle } />
                                 {/*路由不正确时，默认跳回home页面*/}
                                 <Route render={() => <Redirect to="/" />} />
                             </Switch>
