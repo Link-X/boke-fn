@@ -79,8 +79,11 @@ module.exports = {
         minifyJS: true // 压缩 HTML 中出现的 JS 代码
       },
       template: path.resolve(__dirname, './index.html')
+    }), 
+    new ExtractTextPlugin({
+      filename: '[name].min.css',
+      allChunks: true // 一开始所有css都打包
     }),
-    new ExtractTextPlugin("styles.css"),
     new webpack.HotModuleReplacementPlugin()
   ],
   resolve: {
