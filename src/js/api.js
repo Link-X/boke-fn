@@ -1,4 +1,4 @@
-import { get, post } from '@/common/utils/http.js'
+import { get, post, put } from '@/common/utils/http.js'
 
 export const login = (params = { userName: '' , password: ''}) => {
     // 登陆
@@ -42,4 +42,8 @@ export const getCity = () => {
 
 export const getArticle = () => {
     return get('/get/article/list').then(res => res)
+}
+
+export const addArticle = (params) => {
+    return put('/add/article', {params, auth: true}).then(res => res)
 }

@@ -1,6 +1,6 @@
 const React = require('react')
 import 'codemirror/lib/codemirror.css'
-import 'codemirror/theme/material.css'
+import 'codemirror/theme/seti.css'
 
 import CodeMirror from 'codemirror'
 import 'codemirror/addon/hint/show-hint.css'
@@ -26,6 +26,13 @@ import 'codemirror/addon/search/search.js'
 import 'codemirror/addon/search/searchcursor.js'
 import 'codemirror/addon/comment/comment.js'
 import 'codemirror/addon/wrap/hardwrap.js'
+import 'codemirror/addon/scroll/simplescrollbars.css'
+import 'codemirror/addon/scroll/simplescrollbars'
+import 'codemirror/mode/vue/vue'
+import 'codemirror/addon/selection/active-line'
+import 'codemirror/mode/meta'
+import 'codemirror/mode/http/http'
+import 'codemirror/mode/clike/clike'
 
 
 const IS_MOBILE = typeof navigator === 'undefined' || (
@@ -53,11 +60,11 @@ class CodeMirrorEditor extends React.Component {
       this.editor = CodeMirror.fromTextArea(this.editorRef.current, {
         keyMap: 'sublime',
         mode: 'markdown',
-        theme: 'material',
+        theme: 'seti',
         gitHubSpice: true,
         taskLists: true,
         strikethrough: true,
-        emoji: true,
+        emoji: false,
         value: this.props.value,
         autoRefresh: true,
         json: true,
