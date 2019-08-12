@@ -49,7 +49,11 @@ class editArticle extends React.Component {
     const msg = this.videtd()
     if (msg.ok) {
       addArticle(this.state.form).then(res => {
-        console.log(res);
+        if (res && res.data && res.data.code === 0) {
+          message.success('保存成功')
+          this.props.history.go(-1)
+          return
+        }
       })
     } else {
       message.error(msg.msg)

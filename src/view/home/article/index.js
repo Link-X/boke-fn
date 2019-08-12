@@ -36,6 +36,41 @@ class Article extends Component {
                 pathname: '/edit-article'
             })
         }
+        this.getTagName = (id) => {
+            if (this.state.navData && this.state.navData.length) {
+                const data = this.state.navData.filter(v => {
+                    return v.id === id
+                }) || [{ tag: '' }]
+                return data[0].tag
+            }
+            return ''
+        }
+        this.getArticleDate = (timesData)  => {
+            //如果时间格式是正确的，那下面这一步转化时间格式就可以不用了
+            const dateBegin = new Date(timesData)
+            const dateEnd = new Date()
+            const dateDiff = dateEnd.getTime() - dateBegin.getTime() // 时间差的毫秒数
+            const dayDiff = Math.floor(dateDiff / (24 * 3600 * 1000)) // 计算出相差天数
+            const leave1 = dateDiff % (24 * 3600 * 1000)    // 计算天数后剩余的毫秒数
+            const hours = Math.floor(leave1 / (3600 * 1000))// 计算出小时数
+            //计算相差分钟数
+            const leave2 = leave1 % (3600 * 1000)    // 计算小时数后剩余的毫秒数
+            const minutes = Math.floor(leave2 / (60 * 1000))// 计算相差分钟数
+            //计算相差秒数
+            const leave3 = leave2 % (60 * 1000)      // 计算分钟数后剩余的毫秒数
+            const seconds = Math.round(leave3 / 1000)
+            let timesString = ''
+        
+            if (dayDiff != 0) {
+                timesString = dayDiff + '天之前'
+            } else if (dayDiff == 0 && hours != 0) {
+                timesString = hours + '小时之前'
+            } else if (dayDiff == 0 && hours == 0) {
+                timesString = minutes + '分钟之前'
+            }
+        
+            return timesString
+        }
         // <ul className="article-nav">
                     //     {
                     //         navData.map(v => {
@@ -100,6 +135,9 @@ class Article extends Component {
                                                 <span className="article-tip_span">{v.title}</span>
                                             </div>
                                             <div className="text-li_text">
+                                                <span className="text-li_label text-li_dian label-tag">{this.getTagName(v.tagId)}</span>
+                                                <span className="text-li_label text-li_dian label-userName">{v.userName || '佚名'}</span>
+                                                <span className="text-li_label label-date">{this.getArticleDate(v.createDate)}</span>
                                                 <h4 className="text-li_header">{v.title}</h4>
                                                 <p className="text-li_center">{v.introduce}</p>
                                             </div>

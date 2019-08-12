@@ -1,3 +1,4 @@
+// 三个页面合并成一个页面
 import React, { Component } from 'react';
 import HeaderDom from './head/header.js'
 import Publicity from './publicity/index.js'
