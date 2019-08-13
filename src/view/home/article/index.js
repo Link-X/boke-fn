@@ -104,6 +104,11 @@ class Article extends Component {
             　　}
             }, 500, 800))
         }
+        this.goDetiles = (e) => {
+            if (e.target.nodeName !== "UL") {
+                console.log(e.target.getAttribute('id'));
+            }
+        }
     }
     componentWillMount() {
         this.getNav()
@@ -118,7 +123,7 @@ class Article extends Component {
                 <div className="home-article">
                     <div className="article-header_banner">
                         <div className={`header-banner_left ${!(list.list && list.list.length) ? 'zhanwei zhanwei-article' : '' }`}>
-                            <Carousel >
+                            <Carousel>
                                 {
                                     list.major.map(v => {
                                         return (
@@ -140,13 +145,13 @@ class Article extends Component {
                                     <li className="zhanwei zhanwei-article"></li>
                                 </ul>
                             }
-                            <ul>
+                            <ul  onClick={this.goDetiles}>
                                 {
                                     list.major2.map(v => {
                                         return (
-                                            <li key={v.id}>
-                                                <img src={v.articleImg} />
-                                                <span className="article-tip_span">{v.title}</span>
+                                            <li key={v.id} id={v.id}>
+                                                <img src={v.articleImg}  id={v.id} />
+                                                <span className="article-tip_span"  id={v.id}>{v.title}</span>
                                             </li>
                                         )
                                     })
@@ -157,24 +162,24 @@ class Article extends Component {
 
                     <div className="article-center">
                         <div className="article-center_title">
-                            <h3>最新</h3>
+                            <h3>最新<span style={{ display: 'inline-block', fontWeight: '100', fontSize: '12px', marginLeft: '3px'}}>news</span></h3>
                         </div>
                         <Skeleton active loading={!(list.list && list.list.length)}>
-                            <ul className="article-center_text">
+                            <ul className="article-center_text" onClick={this.goDetiles}>
                                 {
                                     list.list.map(v => {
                                         return (
-                                            <li className="center-text_li" key={v.id}>
-                                                <div className="text-li_left">
-                                                    <img src={v.articleImg} />
-                                                    <span className="article-tip_span">{v.title}</span>
+                                            <li className="center-text_li" key={v.id} id={v.id}>
+                                                <div className="text-li_left"  id={v.id}>
+                                                    <img src={v.articleImg}  id={v.id} />
+                                                    <span className="article-tip_span"  id={v.id}>{v.title}</span>
                                                 </div>
-                                                <div className="text-li_text">
-                                                    <span className="text-li_label text-li_dian label-tag">{this.getTagName(v.tagId)}</span>
-                                                    <span className="text-li_label text-li_dian label-userName">{v.userName || '佚名'}</span>
-                                                    <span className="text-li_label label-date">{getArticleDate(v.createDate)}</span>
-                                                    <h4 className="text-li_header">{v.title}</h4>
-                                                    <p className="text-li_center">{v.introduce}</p>
+                                                <div className="text-li_text"  id={v.id}>
+                                                    <span className="text-li_label text-li_dian label-tag"  id={v.id}>{this.getTagName(v.tagId)}</span>
+                                                    <span className="text-li_label text-li_dian label-userName"  id={v.id}>{v.userName || '佚名'}</span>
+                                                    <span className="text-li_label label-date"  id={v.id}>{getArticleDate(v.createDate)}</span>
+                                                    <h4 className="text-li_header"  id={v.id}>{v.title}</h4>
+                                                    <p className="text-li_center"  id={v.id}>{v.introduce}</p>
                                                 </div>
                                             </li>
                                         )
