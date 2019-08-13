@@ -89,7 +89,13 @@ class Home extends Component {
         }
     }
     componentDidMount () {
+      const xdbHomeCenter = document.querySelector('.xdb-home-center')
+      xdbHomeCenter.style.overflow = 'hidden'
       this.scrollPage()
+    }
+    componentWillUnmount() {
+      const xdbHomeCenter = document.querySelector('.xdb-home-center')
+      xdbHomeCenter.style.overflow = ''
     }
     render () {
         return (

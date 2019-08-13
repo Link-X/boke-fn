@@ -23,3 +23,18 @@ export const getArticleDate = (timesData) => {
 
     return timesString
 }
+
+export const throttle = (func, wait, assignTime) => {
+    let timerId = ''
+    let startTime = new Date()
+    return () => {
+        let nowTime = new Date()
+        clearTimeout(timerId)
+        if (nowTime - startTime < assignTime) {
+            timerId = setTimeout(func, wait)
+            return
+        }
+        func()
+        startTime = nowTime
+    }
+}

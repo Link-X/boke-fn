@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import '@/common/less/article.less'
-import { getArticleDate } from '@/common/utils/utils.js'
+import { getArticleDate, throttle } from '@/common/utils/utils.js'
 import { Carousel, Skeleton, BackTop } from 'antd';
 import { getTags, getArticle } from '@/js/api.js'
 class Article extends Component {
@@ -12,7 +12,8 @@ class Article extends Component {
                 list: [],
                 major: [],
                 major2: []
-            }
+            },
+            page: 1
         }
         this.getNav = () => {
             getTags().then(res => {
@@ -23,11 +24,19 @@ class Article extends Component {
                 }
             })
         }
-        this.getArticle = () => {
-            getArticle().then(res => {
-                if (res && res.data.code === 0) {
+        this.getArticle = (page = 1) => {
+            getArticle({
+                page: page,
+                pageSize: 20
+            }).then(res => {
+                if (res && res.data && res.data.code === 0) {
+                    let { list } = this.state
+                    list.list = list.list.concat(res.data.data.list)
+                    list.major = list.major.concat(res.data.data.major)
+                    list.major2 = list.major2.concat(res.data.data.major2)
                     this.setState({
-                        list: res.data.data
+                        list,
+                        page: page
                     })
                 }
             })
@@ -46,10 +55,50 @@ class Article extends Component {
             }
             return ''
         }
+        this.getScrollTop = () => {
+        　　var scrollTop = 0, bodyScrollTop = 0, documentScrollTop = 0;
+        　　if(document.body){
+        　　　　bodyScrollTop = document.body.scrollTop;
+        　　}
+        　　if(document.documentElement){
+        　　　　documentScrollTop = document.documentElement.scrollTop;
+        　　}
+        　　scrollTop = (bodyScrollTop - documentScrollTop > 0) ? bodyScrollTop : documentScrollTop;
+        　　return scrollTop;
+        }
+        this.getWindowHeight = () => {
+            var windowHeight = 0;
+        　　if(document.compatMode == "CSS1Compat"){
+        　　　　windowHeight = document.documentElement.clientHeight;
+        　　}else{
+        　　　　windowHeight = document.body.clientHeight;
+        　　}
+        　　return windowHeight;
+        }
+        this.getScrollHeight = () => {
+        　　var scrollHeight = 0, bodyScrollHeight = 0, documentScrollHeight = 0;
+        　　if(document.body){
+        　　　　bodyScrollHeight = document.body.scrollHeight;
+        　　}
+        　　if(document.documentElement){
+        　　　　documentScrollHeight = document.documentElement.scrollHeight;
+        　　}
+        　　scrollHeight = (bodyScrollHeight - documentScrollHeight > 0) ? bodyScrollHeight : documentScrollHeight;
+        　　return scrollHeight;
+        }
+        this.initScroll = () => {
+            const that = this
+            window.addEventListener('scroll', throttle(function(){
+            　　if(that.getScrollTop() + that.getWindowHeight() == that.getScrollHeight()){
+                    that.getArticle(that.state.page += 1)
+            　　}
+            }, 500, 800))
+        }
     }
     componentWillMount() {
         this.getNav()
         this.getArticle()
+        this.initScroll()
     }
     render() {
         const { navData, list } = this.state
