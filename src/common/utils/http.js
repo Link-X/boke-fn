@@ -23,6 +23,7 @@ http.interceptors.response.use((data) => {
     }
     if (res.data.code === '0001') {
         message.error('未登陆，请登陆账号')
+        window.location.href = '/#/login'
         return Promise.reject(res)
     }
     return {}
