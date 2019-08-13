@@ -46,7 +46,6 @@ class Article extends Component {
             return ''
         }
         this.getArticleDate = (timesData)  => {
-            //如果时间格式是正确的，那下面这一步转化时间格式就可以不用了
             const dateBegin = new Date(timesData)
             const dateEnd = new Date()
             const dateDiff = dateEnd.getTime() - dateBegin.getTime() // 时间差的毫秒数

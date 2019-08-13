@@ -1,10 +1,10 @@
 import React from 'react'
 import { message, Popover, Button } from 'antd'
 import ReactMarkdown from 'react-markdown'
-import CodeMirrorEditor from './codeMirrorEditor.js'
-import CodeStyle from './codeStyle.js'
-import { getTags, addArticle } from '@/js/api.js'
-import './editcss.less'
+import CodeMirrorEditor from './code-mirror-editor.js'
+import CodeStyle from './code-style.js'
+import { getTags, addArticle, uploadImage } from '@/js/api.js'
+import '@/common/less/edit.less'
 import 'github-markdown-css'
 
 
@@ -32,12 +32,17 @@ class editArticle extends React.Component {
       ok: true,
       msg: ''
     }
-    console.log(form)
+    const mes = {
+      markdown: '请输入分享内容内容',
+      tagId: '请选择标签',
+      title: '请输入标题',
+      articleImg: '请上传图片'
+    }
     Object.keys(form).forEach(v => {
-      if (!form[v] && v !== 'articleImg' && !(v === 'tagId' && form[v] === 0)) {
+      if (!form[v] && !(v === 'tagId' && form[v] === 0)) {
         msg = {
           ok: false,
-          msg: '参数缺少'
+          msg: mes[v]
         }
         return
       }
@@ -96,8 +101,61 @@ class editArticle extends React.Component {
       form
     })
   }
-  uploadImg() {
-    console.log(1234123)
+  clickFile = () => {
+    this.refs.uploadInput.click()
+  }
+  getImgSize(base64url = '') {
+    // 获取图片base64大小
+      const str = base64url.replace('data:image/jpeg;base64,', '')
+      const strLength = str.length
+      const fileLength = parseInt(strLength - (strLength / 8) * 2)
+      let size = ''
+      size = (fileLength / 1024).toFixed(2)
+      return parseInt(size)
+  }
+  compressImage (base64, cb) {
+    const image = new Image()
+    let compressBase64 = ''
+    image.src = base64
+    image.onload = function () { 
+      const width = image.width
+      const height = image.height
+      const canvas = document.createElement('canvas')
+      const ctx = canvas.getContext('2d')
+      canvas.width = width
+      canvas.height = height
+      ctx.drawImage(image, 0, 0, width, height)
+      compressBase64 = canvas.toDataURL('image/jpeg', 0.6)
+      cb(compressBase64)
+    }
+  }
+  uploadImg(e) {
+    const file = e.target.files[0]
+    const reader = new FileReader()
+    const _self = this
+    reader.readAsDataURL(file)
+    reader.onloadend = function (e) {
+      const fileMaxSize = 5120
+      _self.compressImage(e.target.result, function (base64) {
+          const size = _self.getImgSize(base64) || 0
+          if (size > fileMaxSize) {
+            message.info('上传图片过大')
+            return
+          }
+          uploadImage({
+            file: base64
+          }).then(res => {
+            if (res && res.data && res.data.code === 0) {
+              const { form } = _self.state
+              form.articleImg = res.data.data.path
+              _self.setState({
+                form
+              })
+            }
+          })
+      })
+      
+   }
   }
   componentDidMount() {
     this.getNav()
@@ -106,6 +164,11 @@ class editArticle extends React.Component {
     const { form, tagData } = this.state
     return (
       <div className="edit-article_box">
+        <input 
+          type="file"
+          onChange={this.uploadImg}
+          className="uploadInput" 
+          ref="uploadInput"></input>
         <div className="edit-article_title">
           <div className="edit-article_inp">
             <input 
@@ -117,7 +180,10 @@ class editArticle extends React.Component {
             <div style={{marginRight: '10px',display: 'flex', 'alignItems': 'center'}}>
               <Popover placement="bottom" title="上传封面" content={
                 <div className="content">
-                  <p onClick={this.uploadImg}>点击添加封面</p>
+                  { 
+                    !this.state.form.articleImg ? <p onClick={this.clickFile}>点击添加封面</p> :
+                    <img src={this.state.form.articleImg} style={{width: '100%', height: '100%'}}></img>
+                  }
                 </div>
               } trigger="click">
                 <svg xmlns="http://www.w3.org/2000/svg" xmlnsXlink="http://www.w3.org/1999/xlink" width="35px" height="35px" viewBox="0 0 28 28" version="1.1">

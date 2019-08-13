@@ -41,9 +41,16 @@ export const getCity = () => {
 }
 
 export const getArticle = () => {
+    // 获取文章列表
     return get('/get/article/list').then(res => res)
 }
 
 export const addArticle = (params) => {
+    // 新增文章
     return put('/add/article', {params, auth: true}).then(res => res)
+}
+
+export const uploadImage = (params) => {
+    // 上传图片
+    return post('/upload-image', {params})
 }
