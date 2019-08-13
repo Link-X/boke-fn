@@ -131,6 +131,11 @@ class editArticle extends React.Component {
   }
   uploadImg(e) {
     const file = e.target.files[0]
+    const fileType = file.type || 'image/png'
+    if (fileType.indexOf('image') === -1) {
+      message.info('必须上传图片')
+      return
+    }
     const reader = new FileReader()
     const _self = this
     reader.readAsDataURL(file)
@@ -150,6 +155,8 @@ class editArticle extends React.Component {
               form.articleImg = res.data.data.path
               _self.setState({
                 form
+              }, () => {
+                _self.refs.uploadInput.value = ''
               })
             }
           })
@@ -167,6 +174,7 @@ class editArticle extends React.Component {
         <input 
           type="file"
           onChange={this.uploadImg}
+          accept="image/*"
           className="uploadInput" 
           ref="uploadInput"></input>
         <div className="edit-article_title">
