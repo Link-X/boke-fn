@@ -1,12 +1,26 @@
 import React from 'react'
-import { Route, Switch, Redirect, BrowserRouter } from 'react-router-dom'
+import { Route, Switch, Redirect, HashRouter } from 'react-router-dom'
 
 import App from './../App.js'
 import Home from '@/view/home/index.js'
 import Chat from '@/view/chat/index.js'
 import Login from '@/view/login/index.js'
+import EditArticle from '@/view/home/article/edit-article.js'
+// const rootRoute = {
+//     path: '/xdb',
+//     getChildRoutes(location, cb) {
+//         cb(null, [
+//             {
+//                 path: '/chat',
+//                 onEnter: (r) => {
+//                     setTitle('俩套');
+//                 },
+//             }
+//         ])
+//     }
+// }
 const Root = () => (
-    <BrowserRouter>
+    <HashRouter>
         <div>
             <Switch>
                 <Route
@@ -14,9 +28,10 @@ const Root = () => (
                     render={props => (
                         <App>
                             <Switch>
-                                <Route path="/" exact component={Home}></Route>
-                                <Route path="/chat" component={Chat} />
-                                <Route path="/login" component={Login} />
+                                <Route path="/" exact component={ Home }></Route>
+                                <Route path="/chat" component={ Chat } />
+                                <Route path="/login" component={ Login } />
+                                <Route path="/edit-article" component={ EditArticle } />
                                 {/*路由不正确时，默认跳回home页面*/}
                                 <Route render={() => <Redirect to="/" />} />
                             </Switch>
@@ -25,7 +40,7 @@ const Root = () => (
                 </Route>
             </Switch>
         </div>
-    </BrowserRouter>
+    </HashRouter>
  );
   
  export default Root;

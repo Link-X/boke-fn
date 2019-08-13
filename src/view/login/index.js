@@ -15,7 +15,7 @@ class NormalLoginForm extends Component {
                     if (res && res.data) {
                         localStorage.setItem('token',res.data.token)
                         message.success('登陆成功')
-                        this.props.history.push("/");
+                        this.props.history.push("/")
                     }
                 })
             }
@@ -87,9 +87,9 @@ class NormalLoginForm extends Component {
                     忘记密码
                 </a>
                 <div>
-                    <Button 
-                        type='primary' 
-                        htmlType='submit' 
+                    <Button
+                        type='primary'
+                        htmlType='submit'
                         className='login-form-button'>
                         登陆
                     </Button>
