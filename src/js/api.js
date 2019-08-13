@@ -40,6 +40,11 @@ export const getCity = () => {
     })
 }
 
+export const getMajor = () => {
+    // 获取轮播等
+    return get('/get/article/major').then(res => res)
+}
+
 export const getArticle = (params) => {
     // 获取文章列表
     return get('/get/article/list', { params }).then(res => res)

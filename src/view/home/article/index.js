@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import '@/common/less/article.less'
 import { getArticleDate, throttle } from '@/common/utils/utils.js'
 import { Carousel, Skeleton, BackTop } from 'antd';
-import { getTags, getArticle } from '@/js/api.js'
+import { getTags, getArticle, getMajor } from '@/js/api.js'
 class Article extends Component {
     constructor(props) {
         super(props)
@@ -32,11 +32,21 @@ class Article extends Component {
                 if (res && res.data && res.data.code === 0) {
                     let { list } = this.state
                     list.list = list.list.concat(res.data.data.list)
-                    list.major = list.major.concat(res.data.data.major)
-                    list.major2 = list.major2.concat(res.data.data.major2)
                     this.setState({
                         list,
                         page: page
+                    })
+                }
+            })
+        }
+        this.getMajor = () => {
+            getMajor().then(res => {
+                if (res && res.data && res.data.code === 0) {
+                    let { list } = this.state
+                    list.major = list.major.concat(res.data.data.major)
+                    list.major2 = list.major2.concat(res.data.data.major2)
+                    this.setState({
+                        list
                     })
                 }
             })
@@ -98,6 +108,7 @@ class Article extends Component {
     componentWillMount() {
         this.getNav()
         this.getArticle()
+        this.getMajor()
         this.initScroll()
     }
     render() {
