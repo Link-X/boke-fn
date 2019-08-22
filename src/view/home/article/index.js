@@ -165,7 +165,7 @@ class Article extends Component {
 
                     <div className="article-center">
                         <div className="article-center_title">
-                            <h3>最新<span style={{ display: 'inline-block', fontWeight: '100', fontSize: '12px', marginLeft: '3px'}}>news</span></h3>
+                            <h3>最新<i className="iconfont icon-zuixin new-article_title"></i></h3>
                         </div>
                         <Skeleton active loading={!(list.list && list.list.length)}>
                             <ul className="article-center_text" onClick={this.goDetiles}>
@@ -193,7 +193,7 @@ class Article extends Component {
                     </div>
                 </div>
                 <div className="article-edit-box">
-                    <i className="edit-article" onClick={this.goEditArticle}>+</i>
+                    <i className="iconfont icon-xiewenzhang edit-article" onClick={this.goEditArticle}></i>
                 </div>
             </div>
         )

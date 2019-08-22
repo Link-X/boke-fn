@@ -5,9 +5,7 @@ const http = axios.create({
 })
 
 http.interceptors.request.use((config) => {
-    if (config.headers.auth) {
-        config.headers.token = localStorage.getItem('token') || ''
-    }
+    config.headers.token = localStorage.getItem('token') || ''
     return config
 }, (err) => {
     return Promise.reject(error)

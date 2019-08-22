@@ -64,3 +64,7 @@ export const getArticleDetails = (params) => {
     // 获取文章详情
     return get('/get/article/details', { params })
 }
+
+export const loveArticle = (params) => {
+    return post('/love/article', { params })
+}

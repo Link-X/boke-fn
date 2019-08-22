@@ -123,6 +123,11 @@
     h3 {    
         font-weight: bold;
     }
+    .new-article_title {
+        display: inline-block;
+        margin-left: 3px;
+        font-size: 14px;
+    }
 }
 .article-center_text {
     padding-top: 10px;
@@ -193,16 +198,16 @@
 
 .article-edit-box {
     position: fixed;
+    display: flex;
+    justify-content: center;
+    align-items: center;
     bottom: 35px;
     right: 85px;
     width: 28px;
     height: 28px;
-    line-height: 22px;
-    border-radius: 50%;
     text-align: center;
-    border: 1px solid #333;
     .edit-article {
-        font-size: 20px;
+        font-size: 30px;
         color: #333;
         cursor: pointer;
     }
