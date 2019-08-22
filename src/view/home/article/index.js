@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import '@/common/less/article.less'
 import { getArticleDate, throttle } from '@/common/utils/utils.js'
-import { Carousel, Skeleton, BackTop } from 'antd';
+import { Carousel, Skeleton } from 'antd';
 import { getTags, getArticle, getMajor } from '@/js/api.js'
 class Article extends Component {
     constructor(props) {
@@ -106,7 +106,10 @@ class Article extends Component {
         }
         this.goDetiles = (e) => {
             if (e.target.nodeName !== "UL") {
-                console.log(e.target.getAttribute('id'));
+                const id = Number(e.target.getAttribute('id'))
+                this.props.history.push({
+                    pathname: '/article-detials/' + id
+                })
             }
         }
     }
@@ -145,7 +148,7 @@ class Article extends Component {
                                     <li className="zhanwei zhanwei-article"></li>
                                 </ul>
                             }
-                            <ul  onClick={this.goDetiles}>
+                            <ul onClick={this.goDetiles}>
                                 {
                                     list.major2.map(v => {
                                         return (

@@ -52,10 +52,15 @@ export const getArticle = (params) => {
 
 export const addArticle = (params) => {
     // 新增文章
-    return put('/add/article', {params, auth: true}).then(res => res)
+    return put('/add/article', { params, auth: true }).then(res => res)
 }
 
 export const uploadImage = (params) => {
     // 上传图片
-    return post('/upload-image', {params})
+    return post('/upload-image', { params })
+}
+
+export const getArticleDetails = (params) => {
+    // 获取文章详情
+    return get('/get/article/details', { params })
 }
