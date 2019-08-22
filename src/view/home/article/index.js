@@ -1,7 +1,8 @@
 import React, { Component } from 'react'
 import '@/common/less/article.less'
-import { Carousel } from 'antd';
-import { getTags, getArticle } from '@/js/api.js'
+import { getArticleDate, throttle } from '@/common/utils/utils.js'
+import { Carousel, Skeleton } from 'antd';
+import { getTags, getArticle, getMajor } from '@/js/api.js'
 class Article extends Component {
     constructor(props) {
         super(props)
@@ -11,7 +12,8 @@ class Article extends Component {
                 list: [],
                 major: [],
                 major2: []
-            }
+            },
+            page: 1
         }
         this.getNav = () => {
             getTags().then(res => {
@@ -22,11 +24,29 @@ class Article extends Component {
                 }
             })
         }
-        this.getArticle = () => {
-            getArticle().then(res => {
-                if (res && res.data.code === 0) {
+        this.getArticle = (page = 1) => {
+            getArticle({
+                page: page,
+                pageSize: 20
+            }).then(res => {
+                if (res && res.data && res.data.code === 0) {
+                    let { list } = this.state
+                    list.list = list.list.concat(res.data.data.list)
                     this.setState({
-                        list: res.data.data
+                        list,
+                        page: page
+                    })
+                }
+            })
+        }
+        this.getMajor = () => {
+            getMajor().then(res => {
+                if (res && res.data && res.data.code === 0) {
+                    let { list } = this.state
+                    list.major = list.major.concat(res.data.data.major)
+                    list.major2 = list.major2.concat(res.data.data.major2)
+                    this.setState({
+                        list
                     })
                 }
             })
@@ -45,44 +65,59 @@ class Article extends Component {
             }
             return ''
         }
-        this.getArticleDate = (timesData)  => {
-            const dateBegin = new Date(timesData)
-            const dateEnd = new Date()
-            const dateDiff = dateEnd.getTime() - dateBegin.getTime() // 时间差的毫秒数
-            const dayDiff = Math.floor(dateDiff / (24 * 3600 * 1000)) // 计算出相差天数
-            const leave1 = dateDiff % (24 * 3600 * 1000)    // 计算天数后剩余的毫秒数
-            const hours = Math.floor(leave1 / (3600 * 1000))// 计算出小时数
-            //计算相差分钟数
-            const leave2 = leave1 % (3600 * 1000)    // 计算小时数后剩余的毫秒数
-            const minutes = Math.floor(leave2 / (60 * 1000))// 计算相差分钟数
-            //计算相差秒数
-            const leave3 = leave2 % (60 * 1000)      // 计算分钟数后剩余的毫秒数
-            const seconds = Math.round(leave3 / 1000)
-            let timesString = ''
-        
-            if (dayDiff != 0) {
-                timesString = dayDiff + '天之前'
-            } else if (dayDiff == 0 && hours != 0) {
-                timesString = hours + '小时之前'
-            } else if (dayDiff == 0 && hours == 0) {
-                timesString = minutes + '分钟之前'
-            }
-        
-            return timesString
+        this.getScrollTop = () => {
+        　　var scrollTop = 0, bodyScrollTop = 0, documentScrollTop = 0;
+        　　if(document.body){
+        　　　　bodyScrollTop = document.body.scrollTop;
+        　　}
+        　　if(document.documentElement){
+        　　　　documentScrollTop = document.documentElement.scrollTop;
+        　　}
+        　　scrollTop = (bodyScrollTop - documentScrollTop > 0) ? bodyScrollTop : documentScrollTop;
+        　　return scrollTop;
         }
-        // <ul className="article-nav">
-                    //     {
-                    //         navData.map(v => {
-                    //             return (
-                    //                 <li key={v.id}>{v.tag}</li>
-                    //             )
-                    //         })
-                    //     }
-                    // </ul>
+        this.getWindowHeight = () => {
+            var windowHeight = 0;
+        　　if(document.compatMode == "CSS1Compat"){
+        　　　　windowHeight = document.documentElement.clientHeight;
+        　　}else{
+        　　　　windowHeight = document.body.clientHeight;
+        　　}
+        　　return windowHeight;
+        }
+        this.getScrollHeight = () => {
+        　　var scrollHeight = 0, bodyScrollHeight = 0, documentScrollHeight = 0;
+        　　if(document.body){
+        　　　　bodyScrollHeight = document.body.scrollHeight;
+        　　}
+        　　if(document.documentElement){
+        　　　　documentScrollHeight = document.documentElement.scrollHeight;
+        　　}
+        　　scrollHeight = (bodyScrollHeight - documentScrollHeight > 0) ? bodyScrollHeight : documentScrollHeight;
+        　　return scrollHeight;
+        }
+        this.initScroll = () => {
+            const that = this
+            window.addEventListener('scroll', throttle(function(){
+            　　if(that.getScrollTop() + that.getWindowHeight() == that.getScrollHeight()){
+                    that.getArticle(that.state.page += 1)
+            　　}
+            }, 500, 800))
+        }
+        this.goDetiles = (e) => {
+            if (e.target.nodeName !== "UL") {
+                const id = Number(e.target.getAttribute('id'))
+                this.props.history.push({
+                    pathname: '/article-detials/' + id
+                })
+            }
+        }
     }
     componentWillMount() {
         this.getNav()
         this.getArticle()
+        this.getMajor()
+        this.initScroll()
     }
     render() {
         const { navData, list } = this.state
@@ -90,8 +125,8 @@ class Article extends Component {
             <div className="home-article-box">
                 <div className="home-article">
                     <div className="article-header_banner">
-                        <div className="header-banner_left">
-                            <Carousel >
+                        <div className={`header-banner_left ${!(list.list && list.list.length) ? 'zhanwei zhanwei-article' : '' }`}>
+                            <Carousel>
                                 {
                                     list.major.map(v => {
                                         return (
@@ -105,13 +140,21 @@ class Article extends Component {
                             </Carousel>
                         </div>
                         <div className="header-banner_right">
-                            <ul>
+                            {
+                                !(list && list.list.length) && <ul>
+                                    <li className="zhanwei zhanwei-article"></li>
+                                    <li className="zhanwei zhanwei-article"></li>
+                                    <li className="zhanwei zhanwei-article"></li>
+                                    <li className="zhanwei zhanwei-article"></li>
+                                </ul>
+                            }
+                            <ul onClick={this.goDetiles}>
                                 {
                                     list.major2.map(v => {
                                         return (
-                                            <li key={v.id}>
-                                                <img src={v.articleImg} />
-                                                <span className="article-tip_span">{v.title}</span>
+                                            <li key={v.id} id={v.id}>
+                                                <img src={v.articleImg}  id={v.id} />
+                                                <span className="article-tip_span"  id={v.id}>{v.title}</span>
                                             </li>
                                         )
                                     })
@@ -122,33 +165,35 @@ class Article extends Component {
 
                     <div className="article-center">
                         <div className="article-center_title">
-                            <h3>最新</h3>
+                            <h3>最新<i className="iconfont icon-zuixin new-article_title"></i></h3>
                         </div>
-                        <ul className="article-center_text">
-                            {
-                                list.list.map(v => {
-                                    return (
-                                        <li className="center-text_li" key={v.id}>
-                                            <div className="text-li_left">
-                                                <img src={v.articleImg} />
-                                                <span className="article-tip_span">{v.title}</span>
-                                            </div>
-                                            <div className="text-li_text">
-                                                <span className="text-li_label text-li_dian label-tag">{this.getTagName(v.tagId)}</span>
-                                                <span className="text-li_label text-li_dian label-userName">{v.userName || '佚名'}</span>
-                                                <span className="text-li_label label-date">{this.getArticleDate(v.createDate)}</span>
-                                                <h4 className="text-li_header">{v.title}</h4>
-                                                <p className="text-li_center">{v.introduce}</p>
-                                            </div>
-                                        </li>
-                                    )
-                                })
-                            }
-                        </ul>
+                        <Skeleton active loading={!(list.list && list.list.length)}>
+                            <ul className="article-center_text" onClick={this.goDetiles}>
+                                {
+                                    list.list.map(v => {
+                                        return (
+                                            <li className="center-text_li" key={v.id} id={v.id}>
+                                                <div className="text-li_left"  id={v.id}>
+                                                    <img src={v.articleImg}  id={v.id} />
+                                                    <span className="article-tip_span"  id={v.id}>{v.title}</span>
+                                                </div>
+                                                <div className="text-li_text"  id={v.id}>
+                                                    <span className="text-li_label text-li_dian label-tag"  id={v.id}>{this.getTagName(v.tagId)}</span>
+                                                    <span className="text-li_label text-li_dian label-userName"  id={v.id}>{v.userName || '佚名'}</span>
+                                                    <span className="text-li_label label-date"  id={v.id}>{getArticleDate(v.createDate)}</span>
+                                                    <h4 className="text-li_header"  id={v.id}>{v.title}</h4>
+                                                    <p className="text-li_center"  id={v.id}>{v.introduce}</p>
+                                                </div>
+                                            </li>
+                                        )
+                                    })
+                                }
+                            </ul>
+                        </Skeleton>
                     </div>
                 </div>
                 <div className="article-edit-box">
-                    <i className="edit-article" onClick={this.goEditArticle}>+</i>
+                    <i className="iconfont icon-xiewenzhang edit-article" onClick={this.goEditArticle}></i>
                 </div>
             </div>
         )

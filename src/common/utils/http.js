@@ -5,9 +5,7 @@ const http = axios.create({
 })
 
 http.interceptors.request.use((config) => {
-    if (config.headers.auth) {
-        config.headers.token = localStorage.getItem('token') || ''
-    }
+    config.headers.token = localStorage.getItem('token') || ''
     return config
 }, (err) => {
     return Promise.reject(error)
@@ -23,6 +21,7 @@ http.interceptors.response.use((data) => {
     }
     if (res.data.code === '0001') {
         message.error('未登陆，请登陆账号')
+        window.location.href = '/#/login'
         return Promise.reject(res)
     }
     return {}

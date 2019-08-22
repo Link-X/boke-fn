@@ -1,0 +1,91 @@
+.chat-center-box {
+    .article-details_box {
+        width: 100%;
+        height: auto;
+        background-color: rgb(244, 245, 245);
+    }
+    .markdown-body_box {
+        width: 1020px;
+        padding: 0 36px;
+        margin: 0 auto;
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        position: relative;
+        background-color: #fff;
+        padding-bottom: 30px;
+        .markdown-body {
+            // max-width: 930px;
+        }
+        .article-user_box {
+            width: 100%;
+        }
+        .markdown-body_title {
+            width: 100%;
+            font-size: 28px;
+            margin: 0 0 40px 0;
+            font-weight: bold;
+            color: #000;
+        }
+        .article-user_box {
+            display: flex;
+            align-items: center;
+            margin-bottom: 22px;
+        }
+        .user-box_image {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            overflow: hidden;
+            margin-right: 10px;
+            img {
+                width: 100%;
+                height: 100%;
+            }
+        }
+        .article-user_text {
+            min-width: 0;
+            flex-grow: 1;
+            .user-text_title {
+                display: inline-block;
+                max-width: 100%;
+                font-size: 14px;
+                font-weight: 700;
+                color: #333;
+            }
+            .user-text_date {
+                font-size: 10px;
+                color: #909090;
+                span {
+                    margin-right: 5px;
+                }
+            }
+        }
+        .article-left-tools {
+            position: fixed;
+            top: 214px;
+            left: 92px;
+            cursor: pointer;
+            .left-tools_box {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                width: 40px;
+                height: 40px;
+                border-radius: 50%;
+                background-color: #fff;
+                margin-bottom: 10px;
+                box-shadow: 0 2px 4px 0 rgba(0,0,0,.04);
+            }
+            i {
+                display: inline-block;
+                font-size: 24px;
+            }
+            .left-tool_pinlun {
+                margin-top: 2px;
+            }
+            .left-shoucang {
+            }
+        }
+    }
+}

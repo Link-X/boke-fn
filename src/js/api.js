@@ -40,17 +40,31 @@ export const getCity = () => {
     })
 }
 
-export const getArticle = () => {
+export const getMajor = () => {
+    // 获取轮播等
+    return get('/get/article/major').then(res => res)
+}
+
+export const getArticle = (params) => {
     // 获取文章列表
-    return get('/get/article/list').then(res => res)
+    return get('/get/article/list', { params }).then(res => res)
 }
 
 export const addArticle = (params) => {
     // 新增文章
-    return put('/add/article', {params, auth: true}).then(res => res)
+    return put('/add/article', { params, auth: true }).then(res => res)
 }
 
 export const uploadImage = (params) => {
     // 上传图片
-    return post('/upload-image', {params})
+    return post('/upload-image', { params })
+}
+
+export const getArticleDetails = (params) => {
+    // 获取文章详情
+    return get('/get/article/details', { params })
+}
+
+export const loveArticle = (params) => {
+    return post('/love/article', { params })
 }
