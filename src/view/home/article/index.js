@@ -112,6 +112,11 @@ class Article extends Component {
                 })
             }
         }
+        this.goDetiles22 = (id) => {
+            this.props.history.push({
+                pathname: '/article-detials/' + id
+            })
+        }
     }
     componentWillMount() {
         this.getNav()
@@ -130,7 +135,7 @@ class Article extends Component {
                                 {
                                     list.major.map(v => {
                                         return (
-                                            <div className="banner-left_item" key={v.id}>
+                                            <div className="banner-left_item" key={v.id} onClick={() => { this.goDetiles2(v.id) }}>
                                                 <img src={v.articleImg} />
                                                 <span className="article-tip_span">{v.title}</span>
                                             </div>
@@ -171,21 +176,25 @@ class Article extends Component {
                             <ul className="article-center_text" onClick={this.goDetiles}>
                                 {
                                     list.list.map(v => {
-                                        return (
-                                            <li className="center-text_li" key={v.id} id={v.id}>
-                                                <div className="text-li_left"  id={v.id}>
-                                                    <img src={v.articleImg}  id={v.id} />
-                                                    <span className="article-tip_span"  id={v.id}>{v.title}</span>
-                                                </div>
-                                                <div className="text-li_text"  id={v.id}>
-                                                    <span className="text-li_label text-li_dian label-tag"  id={v.id}>{this.getTagName(v.tagId)}</span>
-                                                    <span className="text-li_label text-li_dian label-userName"  id={v.id}>{v.userName || '佚名'}</span>
-                                                    <span className="text-li_label label-date"  id={v.id}>{getArticleDate(v.createDate)}</span>
-                                                    <h4 className="text-li_header"  id={v.id}>{v.title}</h4>
-                                                    <p className="text-li_center"  id={v.id}>{v.introduce}</p>
-                                                </div>
-                                            </li>
-                                        )
+                                        if (v.major !== 1 && v.major2 !== 1) {
+                                            return (
+                                                <li className="center-text_li" key={v.id} id={v.id}>
+                                                    <div className="text-li_left"  id={v.id}>
+                                                        <img src={v.articleImg}  id={v.id} />
+                                                        <span className="article-tip_span"  id={v.id}>{v.title}</span>
+                                                    </div>
+                                                    <div className="text-li_text"  id={v.id}>
+                                                        <span className="text-li_label text-li_dian label-tag"  id={v.id}>{this.getTagName(v.tagId)}</span>
+                                                        <span className="text-li_label text-li_dian label-userName"  id={v.id}>{v.userName || '佚名'}</span>
+                                                        <span className="text-li_label label-date"  id={v.id}>{getArticleDate(v.createDate)}</span>
+                                                        <h4 className="text-li_header"  id={v.id}>{v.title}</h4>
+                                                        <p className="text-li_center"  id={v.id}>{v.introduce}</p>
+                                                    </div>
+                                                </li>
+                                            )
+                                        } else {
+                                            return (<li key={v.id}></li>)
+                                        }
                                     })
                                 }
                             </ul>
