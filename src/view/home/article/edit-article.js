@@ -182,7 +182,8 @@ class editArticle extends React.Component {
             <input 
               value={form.title}
               onChange={this.setInp}
-              placeholder="请输入标题..."></input>
+              placeholder="请输入标题...">
+            </input>
           </div>
           <div className="edit-article-btn">
             <div style={{marginRight: '10px',display: 'flex', 'alignItems': 'center'}}>
