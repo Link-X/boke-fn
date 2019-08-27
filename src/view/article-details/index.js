@@ -20,6 +20,7 @@ class ArticleDetails extends Component {
           }
         }
         this.loverArticle = this.loverArticle.bind(this)
+        this.goPinLun = this.goPinLun.bind(this)
     }
     getData() {
       const { id } = this.props.match.params
@@ -28,7 +29,7 @@ class ArticleDetails extends Component {
           id
         }).then(res => {
           if (res && res.data && res.data.code === 0) {
-            const data = res.data.data[0]
+            const data = res.data.data
             this.setState({
               details: data
             })
@@ -38,9 +39,20 @@ class ArticleDetails extends Component {
     }
     loverArticle() {
       loveArticle({
-        status: 0,
         id: this.state.details.id
+      }).then(res => {
+        if (res.data.code === 0) {
+          const { details } = this.state
+          details.userLoveStatus = res.data.data.status
+          details.loveLen = Number(res.data.data.loveLen)
+          this.setState({
+            details
+          })
+        }
       })
+    }
+    goPinLun() {
+      window.scrollTo()
     }
     componentDidMount() {
       this.getData()
@@ -58,7 +70,7 @@ class ArticleDetails extends Component {
                   <span className="user-text_title">{details.userName}</span>
                   <p className="user-text_date">
                     <span>{formatDateTime(details.createDate)}</span>
-                    <span>阅读: {details.readNumber + 1 || 0}</span>
+                    <span>阅读: {details.articleReadCountLen || 0}</span>
                   </p>
                 </div>
               </div>
@@ -67,18 +79,17 @@ class ArticleDetails extends Component {
                   className="markdown-body"
                   skipHtml={true}
                   renderers={{code: CodeStyle}}
-                  source={details.markdown}></ReactMarkdown>
-                  <div className="article-left-tools">
-                    <div className="left-tools_box" onClick={this.loverArticle}>
-                        <i className="iconfont icon-dianzan-copy left-tools_love"></i>
-                    </div>
-                    <div className="left-tools_box">
-                        <i className="iconfont icon-pinglun left-tool_pinlun"></i>
-                    </div>
-                    <div className="left-tools_box">
-                        <i className="iconfont icon-shoucang left-shoucang"></i>
-                    </div>
-                  </div>
+                  source={details.markdown}>
+              </ReactMarkdown>
+              <div className="article-left-tools">
+                <div className="left-tools_box" onClick={this.loverArticle}>
+                    <span className="left-tools_tip">{details.loveLen}</span> 
+                    <i className={`iconfont icon-dianzan-copy left-tools_love ${details.userLoveStatus === '1' ? 'left-tools-love_article' : ''}`}></i>
+                </div>
+                <div className="left-tools_box" onClick={this.goPinLun}>
+                    <i className="iconfont icon-pinglun left-tool_pinlun"></i>
+                </div>
+              </div>
             </div>
           </div>
         )
