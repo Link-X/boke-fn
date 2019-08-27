@@ -25,6 +25,7 @@ class editArticle extends React.Component {
     this.submit = this.submit.bind(this)
     this.setInp = this.setInp.bind(this)
     this.selectTag = this.selectTag.bind(this)
+    this.removeImg = this.removeImg.bind(this)
   }
   videtd() {
     const { form } = this.state
@@ -164,6 +165,14 @@ class editArticle extends React.Component {
       
    }
   }
+  removeImg() {
+    const { form } = this.state
+    form.articleImg = ''
+    this.refs.uploadInput.value = ''
+    this.setState({
+      form
+    })
+  }
   componentDidMount() {
     this.getNav()
   }
@@ -191,7 +200,10 @@ class editArticle extends React.Component {
                 <div className="content">
                   { 
                     !this.state.form.articleImg ? <p onClick={this.clickFile}>点击添加封面</p> :
-                    <img src={this.state.form.articleImg} style={{width: '100%', height: '100%'}}></img>
+                    <div className="edit-article_img_box">
+                      <span onClick={this.removeImg}>x</span>
+                      <img src={this.state.form.articleImg} style={{width: '100%', height: '100%'}}></img>
+                    </div>
                   }
                 </div>
               } trigger="click">
