@@ -112,7 +112,7 @@ class Article extends Component {
                 })
             }
         }
-        this.goDetiles22 = (id) => {
+        this.goDetiles2 = (id) => {
             this.props.history.push({
                 pathname: '/article-detials/' + id
             })

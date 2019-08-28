@@ -14,6 +14,12 @@ class Home extends Component {
           if (this.state.history === url) {
             return
           }
+          if (url === '/photo-album') {
+            this.props.history.push({
+              pathname: url
+            })
+            return
+          }
           this.setState({
             history: url
           })

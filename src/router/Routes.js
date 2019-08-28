@@ -7,6 +7,7 @@ import Chat from '@/view/chat/index.js'
 import Login from '@/view/login/index.js'
 import EditArticle from '@/view/home/article/edit-article.js'
 import ArticleDetials from '@/view/article-details/index.js'
+import PhotoAlbum from '@/view/photo-album/index.js'
 // const rootRoute = {
 //     path: '/xdb',
 //     getChildRoutes(location, cb) {
@@ -34,6 +35,7 @@ const Root = () => (
                                 <Route path="/login" component={ Login } />
                                 <Route path="/edit-article" component={ EditArticle } />
                                 <Route exact path="/article-detials/:id" component={ ArticleDetials } />
+                                <Route path="/photo-album" component={ PhotoAlbum } />
                                 {/*路由不正确时，默认跳回home页面*/}
                                 <Route render={() => <Redirect to="/" />} />
                             </Switch>

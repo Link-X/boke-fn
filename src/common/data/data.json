@@ -13,7 +13,7 @@
         {
             "label": "相册",
             "value": 3,
-            "url": "/photo"
+            "url": "/photo-album"
         },
         {
             "label": "聊天",
