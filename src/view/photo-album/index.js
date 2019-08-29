@@ -36,7 +36,7 @@ class PhotoAlbum extends Component {
           <div>
             <div id="screen" ref="screen">
                 <div id="command">
-                    <h1>每天饭点，不知道要吃什么--选择困难症</h1>
+                    <h1 style={{color: '#fff'}}>一个相册</h1>
                     <div id="bar" ref="bar"></div>
                 </div>
             </div>
