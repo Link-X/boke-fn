@@ -68,3 +68,7 @@ export const getArticleDetails = (params) => {
 export const loveArticle = (params) => {
     return post('/love/article', { params })
 }
+
+export const getPhoto = (params = {}) => {
+    return get('/get/photo/data')
+}

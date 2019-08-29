@@ -1,79 +1,59 @@
 
 import { m3D } from '@/common/utils/photo-album.js'
+import { Modal } from 'antd';
 import '@/common/less/photo-album.less'
 import React, { Component } from 'react';
-
+import { getPhoto } from '@/js/api.js'
 class PhotoAlbum extends Component {
     constructor (props) {
         super(props)
+        this.state = {
+            visible: false,
+            articledSrc: ''
+        }
     }
     componentDidMount() {
-        const imgData = [
-            { 
-                src: 'https://ss1.baidu.com/9vo3dSag_xI4khGko9WTAnF6hhy/image/h%3D300/sign=92afee66fd36afc3110c39658318eb85/908fa0ec08fa513db777cf78376d55fbb3fbd9b3.jpg',
-                url: 'https://www.baidu.com', 
-                title: '随便放一张图片', 
-                color: '#fff' 
-            },{ 
-                src: 'https://ss1.baidu.com/9vo3dSag_xI4khGko9WTAnF6hhy/image/h%3D300/sign=92afee66fd36afc3110c39658318eb85/908fa0ec08fa513db777cf78376d55fbb3fbd9b3.jpg',
-                url: 'https://www.baidu.com', 
-                title: '随便放一张图片',
-                color: '#fff' 
-            },{ 
-                src: 'https://ss1.baidu.com/9vo3dSag_xI4khGko9WTAnF6hhy/image/h%3D300/sign=92afee66fd36afc3110c39658318eb85/908fa0ec08fa513db777cf78376d55fbb3fbd9b3.jpg',
-                url: 'https://www.baidu.com', 
-                title: '随便放一张图片', 
-                color: '#fff' 
-            },{ 
-                src: 'https://ss1.baidu.com/9vo3dSag_xI4khGko9WTAnF6hhy/image/h%3D300/sign=92afee66fd36afc3110c39658318eb85/908fa0ec08fa513db777cf78376d55fbb3fbd9b3.jpg',
-                url: 'https://www.baidu.com', 
-                title: '随便放一张图片', 
-                color: '#fff' 
-            },{ 
-                src: 'https://ss1.baidu.com/9vo3dSag_xI4khGko9WTAnF6hhy/image/h%3D300/sign=92afee66fd36afc3110c39658318eb85/908fa0ec08fa513db777cf78376d55fbb3fbd9b3.jpg',
-                url: 'https://www.baidu.com', 
-                title: '随便放一张图片', 
-                color: '#fff' 
-            },{ 
-                src: 'https://ss1.baidu.com/9vo3dSag_xI4khGko9WTAnF6hhy/image/h%3D300/sign=92afee66fd36afc3110c39658318eb85/908fa0ec08fa513db777cf78376d55fbb3fbd9b3.jpg',
-                url: 'https://www.baidu.com', 
-                title: '随便放一张图片', 
-                color: '#fff' 
-            },{ 
-                src: 'https://ss1.baidu.com/9vo3dSag_xI4khGko9WTAnF6hhy/image/h%3D300/sign=92afee66fd36afc3110c39658318eb85/908fa0ec08fa513db777cf78376d55fbb3fbd9b3.jpg',
-                url: 'https://www.baidu.com', 
-                title: '随便放一张图片', 
-                color: '#fff' 
-            },{ 
-                src: 'https://ss1.baidu.com/9vo3dSag_xI4khGko9WTAnF6hhy/image/h%3D300/sign=92afee66fd36afc3110c39658318eb85/908fa0ec08fa513db777cf78376d55fbb3fbd9b3.jpg',
-                url: 'https://www.baidu.com', 
-                title: '随便放一张图片', 
-                color: '#fff' 
-            },
-        ]
-        const refsData = {
-            screen: this.refs.screen,
-            bar: this.refs.bar,
-            urlInfo: this.refs.urlInfo
-        }
-        console.log(m3D())
-        setTimeout(() => {
-            m3D().init(imgData, refsData, function (diapo) { 
-                const src = diapo.srcImg.src
-                console.log(diapo)
-             })
-        }, 20)
+        getPhoto().then(res => {
+            if (res && res.data && res.data.code === 0) {
+                const imgData = res.data.data || []
+                const refsData = {
+                    screen: this.refs.screen,
+                    bar: this.refs.bar,
+                    urlInfo: this.refs.urlInfo
+                }
+                m3D().init(imgData, refsData, (diapo) => { 
+                    const src = diapo.srcImg.src
+                    this.setState({
+                        visible: true,
+                        articledSrc: src
+                    })
+                })
+            }
+        })
     }
     render () {
         return (
           <div>
-          <div id="screen" ref="screen">
-            <div id="command">
-                <h1>3D特效图片展示相册</h1>
-                <div id="bar" ref="bar"></div>
+            <div id="screen" ref="screen">
+                <div id="command">
+                    <h1>每天饭点，不知道要吃什么--选择困难症</h1>
+                    <div id="bar" ref="bar"></div>
                 </div>
             </div>
             <div id="urlInfo" ref="urlInfo"></div>
+            <Modal 
+                wrapClassName="photo-model"
+                closable={true}
+                footer={null}
+                zIndex={24501}
+                onCancel={() => {
+                    this.setState({
+                        visible: false
+                    })
+                }}
+                visible={this.state.visible}>
+                <img src={this.state.articledSrc}></img>
+            </Modal>
           </div>
         )
     }

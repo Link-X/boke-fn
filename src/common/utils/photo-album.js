@@ -122,7 +122,7 @@ export const m3D = () => {
         this.css.top = Math.round(nh + y * p - h * .5) + 'px'
         this.css.width = Math.round(w) + 'px'
         this.css.height = Math.round(h) + 'px'
-        this.css.zIndex = this.zi - Math.round(z)
+        this.css.zIndex = Math.abs(this.zi - Math.round(z))
       } else {
         /* ---- image is loaded? ---- */
         this.isLoaded = this.loading()

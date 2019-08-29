@@ -23,27 +23,25 @@ import PhotoAlbum from '@/view/photo-album/index.js'
 // }
 const Root = () => (
     <HashRouter>
-        <div>
-            <Switch>
-                <Route
-                    path="/"
-                    render={props => (
-                        <App>
-                            <Switch>
-                                <Route path="/" exact component={ Home }></Route>
-                                <Route path="/chat" component={ Chat } />
-                                <Route path="/login" component={ Login } />
-                                <Route path="/edit-article" component={ EditArticle } />
-                                <Route exact path="/article-detials/:id" component={ ArticleDetials } />
-                                <Route path="/photo-album" component={ PhotoAlbum } />
-                                {/*路由不正确时，默认跳回home页面*/}
-                                <Route render={() => <Redirect to="/" />} />
-                            </Switch>
-                        </App>
-                    )}>
-                </Route>
-            </Switch>
-        </div>
+        <Switch>
+            <Route
+                path="/"
+                render={props => (
+                    <App>
+                        <Switch>
+                            <Route path="/" exact component={ Home }></Route>
+                            <Route path="/chat" component={ Chat } />
+                            <Route path="/login" component={ Login } />
+                            <Route path="/edit-article" component={ EditArticle } />
+                            <Route exact path="/article-detials/:id" component={ ArticleDetials } />
+                            <Route path="/photo-album" component={ PhotoAlbum } />
+                            {/*路由不正确时，默认跳回home页面*/}
+                            <Route render={() => <Redirect to="/" />} />
+                        </Switch>
+                    </App>
+                )}>
+            </Route>
+        </Switch>
     </HashRouter>
  );
   

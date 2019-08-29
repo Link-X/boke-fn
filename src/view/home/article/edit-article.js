@@ -33,21 +33,24 @@ class editArticle extends React.Component {
       ok: true,
       msg: ''
     }
-    const mes = {
-      markdown: '请输入分享内容内容',
-      tagId: '请选择标签',
-      title: '请输入标题',
-      articleImg: '请上传图片'
-    }
-    Object.keys(form).forEach(v => {
-      if (!form[v] && !(v === 'tagId' && form[v] === 0)) {
-        msg = {
-          ok: false,
-          msg: mes[v]
-        }
-        return
+    if (!form.markdown || form.markdown.length < 60) {
+      msg = {
+        ok: false,
+        msg: '内容请最少输入60字'
       }
-    })
+    }
+    if (!form.tagId && form.tagId !== 0) {
+      msg = {
+        ok: false,
+        msg: '请选择标签'
+      }
+    }
+    if (!form.title || form.title.length < 3) {
+      msg = {
+        ok: false,
+        msg: '请输入标题,最少3个字符'
+      }
+    }
     return msg
   }
   submit(e) {
@@ -196,7 +199,7 @@ class editArticle extends React.Component {
           </div>
           <div className="edit-article-btn">
             <div style={{marginRight: '10px',display: 'flex', 'alignItems': 'center'}}>
-              <Popover placement="bottom" title="上传封面" content={
+              <Popover placement="bottom" title="上传图片(在这取url)" content={
                 <div className="content">
                   { 
                     !this.state.form.articleImg ? <p onClick={this.clickFile}>点击添加封面</p> :
