@@ -63,15 +63,20 @@ class editArticle extends React.Component {
     const { form } = this.state
     if (form.id) {
         editArticleDetials(form).then(res => {
-            message.success('保存成功')
-            this.props.history.go(-1)
+            if(res && res.data && res.data.code === 0) {
+              message.success('编辑成功')
+              this.props.history.go(-1)
+            } else {
+              message.error('编辑失败')
+            }
         })
     } else {
         addArticle(form).then(res => {
             if (res && res.data && res.data.code === 0) {
                 message.success('保存成功')
                 this.props.history.go(-1)
-                return
+            } else {
+              message.error('保存失败')
             }
         })
     }
@@ -148,7 +153,7 @@ class editArticle extends React.Component {
     const file = e.target.files[0]
     const fileType = file.type || 'image/png'
     if (fileType.indexOf('image') === -1) {
-      message.info('必须上传图片')
+      message.info('文件类型错误o')
       return
     }
     const reader = new FileReader()
