@@ -5,7 +5,7 @@ import App from './../App.js'
 import Home from '@/view/home/index.js'
 import Chat from '@/view/chat/index.js'
 import Login from '@/view/login/index.js'
-import EditArticle from '@/view/home/article/edit-article.js'
+import EditArticle from '@/view/edit-article/index.js'
 import ArticleDetials from '@/view/article-details/index.js'
 import PhotoAlbum from '@/view/photo-album/index.js'
 // const rootRoute = {

@@ -3,7 +3,7 @@ import { message, Popover, Button } from 'antd'
 import ReactMarkdown from 'react-markdown'
 import CodeMirrorEditor from './code-mirror-editor.js'
 import CodeStyle from './code-style.js'
-import { getTags, addArticle, uploadImage } from '@/js/api.js'
+import { getTags, addArticle, uploadImage, getArticleDetails, editArticleDetials } from '@/js/api.js'
 import '@/common/less/edit.less'
 import 'github-markdown-css'
 
@@ -56,16 +56,24 @@ class editArticle extends React.Component {
   submit(e) {
     e.stopPropagation()
     const msg = this.videtd()
-    if (msg.ok) {
-      addArticle(this.state.form).then(res => {
-        if (res && res.data && res.data.code === 0) {
-          message.success('保存成功')
-          this.props.history.go(-1)
-          return
-        }
-      })
+    if (!msg.ok) {
+        message.error(msg.msg)
+        return
+    }
+    const { form } = this.state
+    if (form.id) {
+        editArticleDetials(form).then(res => {
+            message.success('保存成功')
+            this.props.history.go(-1)
+        })
     } else {
-      message.error(msg.msg)
+        addArticle(form).then(res => {
+            if (res && res.data && res.data.code === 0) {
+                message.success('保存成功')
+                this.props.history.go(-1)
+                return
+            }
+        })
     }
   }
   getNav() {
@@ -77,6 +85,9 @@ class editArticle extends React.Component {
                 return v
               })
             })
+        }
+        if (this.props.history.location.query && this.props.history.location.query.id) {
+            this.getArticleDetails(this.props.history.location.query.id)
         }
     })
   }
@@ -174,6 +185,33 @@ class editArticle extends React.Component {
     this.refs.uploadInput.value = ''
     this.setState({
       form
+    })
+  }
+  getArticleDetails(id) {
+      // 编辑
+    getArticleDetails({
+        id
+    }).then(res => {
+        if (res && res.data && res.data.code === 0) {
+            const data = res.data.data
+            const { form } = this.state
+            const resetForm = {
+                markdown: data.markdown,
+                tagId: data.tagId,
+                title: data.title,
+                articleImg: data.articleImg,
+                id: this.props.history.location.query.id
+            }
+            this.selectTag({
+                id: data.tagId
+            })
+            this.setState({
+                form: {
+                    ...form,
+                    ...resetForm
+                }
+            })
+          }
     })
   }
   componentDidMount() {

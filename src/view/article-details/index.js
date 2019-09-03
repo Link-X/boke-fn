@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { getArticleDetails, loveArticle } from '@/js/api.js'
 import { formatDateTime } from '@/common/utils/utils.js'
 import ReactMarkdown from 'react-markdown'
-import CodeStyle from '@/view/home/article/code-style.js'
+import CodeStyle from '@/view/edit-article/code-style.js'
 import '@/common/less/article-details.less'
 import 'github-markdown-css'
 
@@ -21,6 +21,7 @@ class ArticleDetails extends Component {
         }
         this.loverArticle = this.loverArticle.bind(this)
         this.goPinLun = this.goPinLun.bind(this)
+        this.editArticle = this.editArticle.bind(this)
     }
     getData() {
       const { id } = this.props.match.params
@@ -54,6 +55,14 @@ class ArticleDetails extends Component {
     goPinLun() {
       window.scrollTo()
     }
+    editArticle() {
+      this.props.history.push({
+        pathname: '/edit-article',
+        query: {
+          id: this.state.details.id
+        }
+      })
+    }
     componentDidMount() {
       this.getData()
     }
@@ -71,6 +80,7 @@ class ArticleDetails extends Component {
                   <p className="user-text_date">
                     <span>{formatDateTime(details.createDate)}</span>
                     <span>阅读: {details.articleReadCountLen || 0}</span>
+                    {details.isEdit && <b className="article-edit_btn" onClick={this.editArticle}>编辑</b>}
                   </p>
                 </div>
               </div>

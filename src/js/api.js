@@ -72,3 +72,7 @@ export const loveArticle = (params) => {
 export const getPhoto = (params = {}) => {
     return get('/get/photo/data')
 }
+
+export const editArticleDetials = (params = {}) => {
+    return post('/endit/article', { params, auth: true })
+}
