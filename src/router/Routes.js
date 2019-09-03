@@ -8,6 +8,7 @@ import Login from '@/view/login/index.js'
 import EditArticle from '@/view/home/article/edit-article.js'
 import ArticleDetials from '@/view/article-details/index.js'
 import PhotoAlbum from '@/view/photo-album/index.js'
+import webChat from '@/view/web-chat/index'
 // const rootRoute = {
 //     path: '/xdb',
 //     getChildRoutes(location, cb) {
@@ -21,6 +22,7 @@ import PhotoAlbum from '@/view/photo-album/index.js'
 //         ])
 //     }
 // }
+
 const Root = () => (
     <HashRouter>
         <Switch>
@@ -32,6 +34,7 @@ const Root = () => (
                             <Route path="/" exact component={ Home }></Route>
                             <Route path="/chat" component={ Chat } />
                             <Route path="/login" component={ Login } />
+                            <Route path="/web-chat" component={ webChat }></Route>
                             <Route path="/edit-article" component={ EditArticle } />
                             <Route exact path="/article-detials/:id" component={ ArticleDetials } />
                             <Route path="/photo-album" component={ PhotoAlbum } />

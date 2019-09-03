@@ -18,7 +18,7 @@
         {
             "label": "聊天",
             "value": 4,
-            "url": "/chat"
+            "url": "/web-chat"
         },
         {
             "label": "code",

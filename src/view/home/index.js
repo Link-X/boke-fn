@@ -14,7 +14,7 @@ class Home extends Component {
           if (this.state.history === url) {
             return
           }
-          if (url === '/photo-album') {
+          if (url === '/photo-album' || url === '/web-chat') {
             this.props.history.push({
               pathname: url
             })
