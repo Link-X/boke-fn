@@ -45,7 +45,7 @@ class ArticleDetails extends Component {
           if (res && res.data && res.data.code === 0) {
             message.success('评论成功')
             const { pinglunList } = this.state
-            pinglunList.push(res.data.data)
+            pinglunList.unshift(res.data.data)
             this.setState({
               pinglunList
             })
@@ -173,7 +173,7 @@ class ArticleDetails extends Component {
                 {
                   pinglunList.map(v => {
                     return (
-                      <li className="pinglun-ul_item" key={v.id}>
+                      <li className="pinglun-ul_item" key={v.createDate}>
                         <div className="pinglun-ul_item_top">
                           <div className="pinglun-ul_touxiang"><img src={v.userImage}></img></div>
                           <span className="pinglun-span pinglun-userName">{v.userName}</span>
