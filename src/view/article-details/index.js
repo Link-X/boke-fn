@@ -60,7 +60,7 @@ class ArticleDetails extends Component {
     scrollPage () {
       const that = this
       window.addEventListener('scroll', throttle(function(){
-        if (document.documentElement.scrollTop >= 900) {
+        if (document.documentElement.scrollTop >= 100) {
           that.setState({
             goTop: true
           })
