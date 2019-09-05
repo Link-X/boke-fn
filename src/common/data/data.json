@@ -13,17 +13,20 @@
         {
             "label": "相册",
             "value": 3,
+            "router": true,
             "url": "/photo-album"
         },
         {
             "label": "聊天",
             "value": 4,
+            "router": true,
             "url": "/chat"
         },
         {
-            "label": "code",
+            "label": "登陆",
             "value": 5,
-            "url": "/code"
+            "router": true,
+            "url": "/login"
         }
     ],
     "weatherData": {

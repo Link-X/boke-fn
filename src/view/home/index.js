@@ -14,7 +14,8 @@ class Home extends Component {
           if (this.state.history === url) {
             return
           }
-          if (url === '/photo-album') {
+          const routerArr = ['/photo-album', '/login']
+          if (routerArr.indexOf(url) !== -1) {
             this.props.history.push({
               pathname: url
             })
