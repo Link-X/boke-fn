@@ -89,7 +89,8 @@ module.exports = {
   resolve: {
     extensions: ['.js', '.json', 'css', '.wasm', '.mjs'], // 查找文件顺序
     alias: { // 别名
-      '@': resolve('src')
+      '@': resolve('src'),
+      'common': resolve('src/common')
     }
   }
 }

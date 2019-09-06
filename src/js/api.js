@@ -66,9 +66,21 @@ export const getArticleDetails = (params) => {
 }
 
 export const loveArticle = (params) => {
+    // 点赞文章
     return post('/love/article', { params })
 }
 
 export const getPhoto = (params = {}) => {
+    // 获取相册
     return get('/get/photo/data')
+}
+
+export const editArticleDetials = (params = {}) => {
+    // 修改文章
+    return post('/endit/article', { params, auth: true })
+}
+
+export const addCommentArticle = (params = {}) => {
+    // 评论
+    return post('/add/article-comment', { params, auth: true })
 }
