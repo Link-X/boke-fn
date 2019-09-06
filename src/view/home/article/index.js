@@ -100,7 +100,7 @@ class Article extends Component {
             const that = this
             window.addEventListener('scroll', throttle(function(){
             　　if(that.getScrollTop() + that.getWindowHeight() == that.getScrollHeight()){
-                    that.getArticle(that.state.page += 1)
+                    // that.getArticle(that.state.page += 1)
             　　}
             }, 500, 800))
         }
