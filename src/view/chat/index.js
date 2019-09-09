@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import { DatePicker } from 'antd';
 
 class Chat extends Component {
     constructor (props) {
@@ -8,7 +7,6 @@ class Chat extends Component {
     render () {
         return (
           <div>
-            <DatePicker></DatePicker>
           </div>
         )
     }

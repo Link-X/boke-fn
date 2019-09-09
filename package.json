@@ -15,8 +15,6 @@
     "codemirror": "^5.48.2",
     "github-markdown-css": "^3.0.1",
     "highlight.js": "^9.15.9",
-    "mobx": "^5.9.0",
-    "mobx-react": "^5.4.3",
     "react": "^16.7.0",
     "react-dom": "^16.7.0",
     "react-markdown": "^4.1.0",
