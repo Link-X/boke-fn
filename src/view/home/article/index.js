@@ -13,7 +13,7 @@ class Article extends Component {
                 major: [],
                 major2: []
             },
-            page: 1
+            page: 0
         }
         this.getNav = () => {
             getTags().then(res => {
@@ -24,12 +24,13 @@ class Article extends Component {
                 }
             })
         }
-        this.getArticle = (page = 1) => {
+        this.getArticle = (page = 0) => {
             getArticle({
                 page: page,
-                pageSize: 20
+                pageSize: 10
             }).then(res => {
-                if (res && res.data && res.data.code === 0) {
+                const data = (res && res.data) || {}
+                if (data.code === 0 && data.data && data.data.list && data.data.list.length) {
                     let { list } = this.state
                     list.list = list.list.concat(res.data.data.list)
                     this.setState({
@@ -100,7 +101,7 @@ class Article extends Component {
             const that = this
             window.addEventListener('scroll', throttle(function(){
             　　if(that.getScrollTop() + that.getWindowHeight() == that.getScrollHeight()){
-                    // that.getArticle(that.state.page += 1)
+                    that.getArticle(that.state.page + 1)
             　　}
             }, 500, 800))
         }

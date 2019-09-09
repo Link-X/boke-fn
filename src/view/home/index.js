@@ -3,6 +3,7 @@ import React, { Component } from 'react';
 import HeaderDom from './head/header.js'
 import Publicity from './publicity/index.js'
 import Article from './article/index.js'
+import PhotoAlbum from './phot-album/photoAlbum.js'
 class Home extends Component {
     constructor (props) {
         super(props)
@@ -14,7 +15,7 @@ class Home extends Component {
           if (this.state.history === url) {
             return
           }
-          const routerArr = ['/photo-album', '/login']
+          const routerArr = ['/login']
           if (routerArr.indexOf(url) !== -1) {
             this.props.history.push({
               pathname: url
@@ -32,9 +33,7 @@ class Home extends Component {
             <HeaderDom boxIndex={this.state.boxIndex}  clickTab={this.clickTab}></HeaderDom>
             { this.state.history === '/' &&  <Publicity></Publicity> }
             { this.state.history === '/article' && <Article history={this.props.history}></Article> }
-            <div>
-
-            </div>
+            { this.state.history === '/photo-album' && <PhotoAlbum></PhotoAlbum>  }
           </div>
         )
     }
