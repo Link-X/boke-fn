@@ -17,12 +17,6 @@
             "url": "/photo-album"
         },
         {
-            "label": "聊天",
-            "value": 4,
-            "router": true,
-            "url": "/chat"
-        },
-        {
             "label": "登陆",
             "value": 5,
             "router": true,
