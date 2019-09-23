@@ -84,3 +84,8 @@ export const addCommentArticle = (params = {}) => {
     // 评论
     return post('/add/article-comment', { params, auth: true })
 }
+
+export const delArticle = (params = {}) => {
+    // 删除文章
+    return post('/del/article', { params, auth: true })
+}

@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { getArticleDetails, loveArticle, addCommentArticle } from '@/js/api.js'
+import { getArticleDetails, loveArticle, addCommentArticle, delArticle } from '@/js/api.js'
 import { throttle } from '@/common/utils/utils.js'
 import { formatDateTime, getArticleDate } from '@/common/utils/utils.js'
 import { Input, Button, message } from 'antd';
@@ -27,6 +27,7 @@ class ArticleDetails extends Component {
         this.loverArticle = this.loverArticle.bind(this)
         this.goPinLun = this.goPinLun.bind(this)
         this.editArticle = this.editArticle.bind(this)
+        this.delArticle = this.delArticle.bind(this)
         this.scrollPage = this.scrollPage.bind(this)
         this.onChange = this.onChange.bind(this)
         this.submitPingLun = this.submitPingLun.bind(this)
@@ -109,12 +110,19 @@ class ArticleDetails extends Component {
       window.scrollTo(0, height);
       this.refs.pinglunRef.focus()
     }
-    editArticle() {
+    editArticle(e) {
+      e.preventDefault()
       this.props.history.push({
         pathname: '/edit-article',
         query: {
           id: this.state.details.id
         }
+      })
+    }
+    delArticle() {
+      console.log(1234)
+      delArticle({id: this.state.details.id}).then(res => {
+        message.success('删除成功')
       })
     }
     componentDidMount() {
@@ -135,7 +143,8 @@ class ArticleDetails extends Component {
                   <p className="user-text_date">
                     <span>{formatDateTime(details.createDate)}</span>
                     <span>阅读: {details.articleReadCountLen || 0}</span>
-                    {details.isEdit && <b className="article-edit_btn" onClick={this.editArticle}>编辑</b>}
+                    {details.isEdit && <a onClick={this.editArticle}> <b className="article-edit_btn" onClick={this.editArticle}>编辑</b> </a>}
+                    {details.isEdit && <a onClick={this.editArticle}> <b className="article-edit_btn" onClick={this.delArticle}>删除</b> </a>}
                   </p>
                 </div>
               </div>
