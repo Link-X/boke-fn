@@ -21,6 +21,12 @@
             "value": 5,
             "router": true,
             "url": "/login"
+        },
+        {
+            "label": "资料",
+            "value": 6,
+            "router": true,
+            "url": "/datum"
         }
     ],
     "weatherData": {

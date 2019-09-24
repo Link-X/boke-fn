@@ -15,7 +15,7 @@ class Home extends Component {
           if (this.state.history === url) {
             return
           }
-          const routerArr = ['/login']
+          const routerArr = ['/login', '/datum']
           if (routerArr.indexOf(url) !== -1) {
             this.props.history.push({
               pathname: url
