@@ -27,14 +27,14 @@ class Center extends Component {
                                     <li>Node</li>
                                     <li>以及更多.....</li>
                                 </ul>
-                                 快加入我们，一起分享把&nbsp;
+                                 欢迎加入，一起分享吧&nbsp;
                                 <a href="#/login">注册</a>
                             </TabPane>
                             <TabPane tab="" key="2" className="center-box_article">
                                 <ul className="box-article_list">
-                                    <li>人生是什么，也许就是一条不断追逐中的路吧。</li>
-                                    <li>当时间过去这个世界依然会变。我们还能继续跟上它的步伐吗？</li>
-                                    <li>人生你有着怎么样的思考呢？你是否也会感觉到思维似乎也是有边界。</li>
+                                    <li>人生可以是一条可以不断追逐的路，也可以是一个波澜不惊的河流，但是它不会停止前进</li>
+                                    <li>世界不会停止变化，若干年后。我们还能继续跟上它的步伐吗？</li>
+                                    <li>信仰是人生杠杆的支撑点，具备这个支撑点，才可能成为一个强而有力的人</li>
                                 </ul>
                             </TabPane>
                             <TabPane tab="" key="3" className="center-box_article">

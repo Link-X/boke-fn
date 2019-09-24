@@ -17,7 +17,6 @@ class Home extends Component {
         this.stopScroll = () => {
           const taht = this
           const transitions = {
-            // IE
             'transition': 'transitionend',
             // Opera
             'OTransition': 'oTransitionEnd',
