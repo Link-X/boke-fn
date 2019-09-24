@@ -56,7 +56,10 @@ class Banner extends Component {
             return intverId2
         }
         this.getDayType = () => {
-            getCity().then(city => {
+            getCity().then(data => {
+                const dataCity = data.content.address_detail.city
+                const index = dataCity.indexOf('市')
+                const city = dataCity.substring(0, index)
                 getSimpleWeather({
                     city
                 }).then(res => {

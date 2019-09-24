@@ -1,9 +1,9 @@
 {
   "name": "react-iphon-chat",
   "version": "0.0.1",
-  "description": "网页聊天",
+  "description": "许道斌的个人博客",
   "main": "index.js",
-  "author": "轻聊",
+  "author": "许道斌的个人博客",
   "license": "MIT",
   "scripts": {
     "start": "webpack-dev-server --open --mode development --content-base ./public",

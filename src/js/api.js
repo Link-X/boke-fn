@@ -2,7 +2,28 @@ import { get, post, put } from '@/common/utils/http.js'
 
 export const login = (params = { userName: '' , password: ''}) => {
     // 登陆
-    return post('/user/login', { params, auth: false }).then(res => res.data)
+    return new Promise((res, rej) => {
+        getCity().then(data => {
+            const address_detail = (data && data.content && data.content.address_detail) || {}
+            const dataAdds = {
+                province: address_detail.province,
+                city: address_detail.city,
+                district: address_detail.district,
+                ...params
+            }
+            post('/user/login', { params: dataAdds, auth: false }).then(res2 => {
+                res(res2.data)
+            }).catch(err => {
+                rej(err)
+            })
+        }).catch(err => {
+            post('/user/login', { params, auth: false }).then(res2 => {
+                res(res2.data)
+            }).catch(err => {
+                rej(err)
+            })
+        })
+    })
 }
 
 export const getArticleList = (params = { page: 1, pageSize: 10 }) => {
@@ -23,21 +44,25 @@ export const getSimpleWeather = (params = {}) => {
 export const getCity = () => {
     // 获取定位
     return new Promise((res, rej) => {
-        window.showLocation = (data) => { 
-            if (data && data.content && data.content.address_detail) {
-                window.city = data.content.address_detail.city
-            }
+        let addData = {}
+        window.showLocation = (data) => {
+            addData = data
         }
         const script = document.createElement('script')
         script.type = 'text/javascript'
         script.src = 'https://api.map.baidu.com/location/ip?ak=BhckEOslyspzdDFOnuniCNlULdljhPxl&coor=bd09ll&callback=showLocation'
         document.head.appendChild(script)
         script.onload = function () {
-            const index = window.city.indexOf('市')
-            const city = index && window.city.substring(0, index)
-            res(city)
+            res(addData)
+        }
+        script.onerror = function (e) {
+            rej(e)
         }
     })
+}
+
+export const getUserDate = () => {
+    return get('/get/user/details', {auth: true}).then(res => res)
 }
 
 export const getMajor = () => {
@@ -83,4 +108,9 @@ export const editArticleDetials = (params = {}) => {
 export const addCommentArticle = (params = {}) => {
     // 评论
     return post('/add/article-comment', { params, auth: true })
+}
+
+export const delArticle = (params = {}) => {
+    // 删除文章
+    return post('/del/article', { params, auth: true })
 }

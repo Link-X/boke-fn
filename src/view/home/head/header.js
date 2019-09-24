@@ -13,7 +13,7 @@ class HeaderDom extends Component {
             navBoxCalss: ''
         }
         this.tabNav = function (e) {
-            if (e.target.nodeName !== 'LI') {
+            if (e.target.nodeName !== 'LI' && e.target.nodeName !== 'A') {
                 return
             }
             const index = e.target.getAttribute('data-value')
@@ -56,7 +56,12 @@ class HeaderDom extends Component {
                                             data-value={v.value}
                                             data-url={v.url}
                                             className={v.value === this.state.activeIndex ? 'active' : ''}>
-                                            {v.label}
+                                            <a 
+                                                data-value={v.value}
+                                                data-url={v.url}
+                                                onClick={(e) => {
+                                                e.preventDefault()
+                                            }}>{v.label}</a>
                                         </li>
                                     )
                                 })

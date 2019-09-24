@@ -52,7 +52,8 @@ class Article extends Component {
                 }
             })
         }
-        this.goEditArticle = () => {
+        this.goEditArticle = (e) => {
+            e.preventDefault()
             this.props.history.push({
                 pathname: '/edit-article'
             })
@@ -159,7 +160,9 @@ class Article extends Component {
                                     list.major2.map(v => {
                                         return (
                                             <li key={v.id} id={v.id}>
-                                                <img src={v.articleImg}  id={v.id} />
+                                            <a onClick={(e) => { e.preventDefault() }} id={v.id}>
+                                                <img src={v.articleImg} />
+                                            </a>
                                                 <span className="article-tip_span"  id={v.id}>{v.title}</span>
                                             </li>
                                         )
@@ -185,7 +188,9 @@ class Article extends Component {
                                                         <span className="article-tip_span"  id={v.id}>{v.title}</span>
                                                     </div>
                                                     <div className="text-li_text"  id={v.id}>
-                                                        <span className="text-li_label text-li_dian label-tag"  id={v.id}>{this.getTagName(v.tagId)}</span>
+                                                        <a onClick={(e) => { e.preventDefault() }} id={v.id}>
+                                                            <span className="text-li_label text-li_dian label-tag"  id={v.id}>{this.getTagName(v.tagId)}</span>
+                                                        </a>
                                                         <span className="text-li_label text-li_dian label-userName"  id={v.id}>{v.userName || '佚名'}</span>
                                                         <span className="text-li_label label-date"  id={v.id}>{getArticleDate(v.createDate)}</span>
                                                         <h4 className="text-li_header"  id={v.id}>{v.title}</h4>
@@ -203,7 +208,9 @@ class Article extends Component {
                     </div>
                 </div>
                 <div className="article-edit-box">
-                    <i className="iconfont icon-xiewenzhang edit-article" onClick={this.goEditArticle}></i>
+                    <a onClick={this.goEditArticle}>
+                        <i className="iconfont icon-xiewenzhang edit-article" ></i>
+                    </a>
                 </div>
             </div>
         )
