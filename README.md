@@ -7,4 +7,4 @@
 react、mobx、react-markdown、codemirror  
 
 接口地址地址：
-    ![https://github.com/Link-X/boke-fn](https://github.com/Link-X/boke-fn)
+    ![https://github.com/Link-X/boke-api](https://github.com/Link-X/boke-api)
