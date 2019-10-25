@@ -107,10 +107,17 @@ class Article extends Component {
             }, 500, 800))
         }
         this.goDetiles = (e) => {
-            if (e.target.nodeName !== "UL") {
-                const id = Number(e.target.getAttribute('id'))
+            const ev = window.event || e;
+            const path = ev.path || (ev.composedPath && ev.composedPath());
+            let tagId = ''
+            path.forEach(v => {
+                if (v.nodeName === 'LI') {
+                    tagId = v.getAttribute('tagId')
+                }
+            })
+            if (e.target.nodeName !== "UL" && tagId) {
                 this.props.history.push({
-                    pathname: '/article-detials/' + id
+                    pathname: '/article-detials/' + tagId
                 })
             }
         }
@@ -159,11 +166,11 @@ class Article extends Component {
                                 {
                                     list.major2.map(v => {
                                         return (
-                                            <li key={v.id} id={v.id}>
-                                            <a onClick={(e) => { e.preventDefault() }} id={v.id}>
-                                                <img src={v.articleImg} />
-                                            </a>
-                                                <span className="article-tip_span"  id={v.id}>{v.title}</span>
+                                            <li key={v.id} tagId={v.id}>
+                                                <a onClick={(e) => { e.preventDefault() }}>
+                                                    <img src={v.articleImg}/>
+                                                </a>
+                                                <span className="article-tip_span">{v.title}</span>
                                             </li>
                                         )
                                     })
@@ -182,19 +189,19 @@ class Article extends Component {
                                     list.list.map(v => {
                                         if (v.major !== 1 && v.major2 !== 1) {
                                             return (
-                                                <li className="center-text_li" key={v.id} id={v.id}>
-                                                    <div className="text-li_left"  id={v.id}>
-                                                        <img src={v.articleImg}  id={v.id} />
-                                                        <span className="article-tip_span"  id={v.id}>{v.title}</span>
+                                                <li className="center-text_li" key={v.id} tagId={v.id}>
+                                                    <div className="text-li_left">
+                                                        <img src={v.articleImg} />
+                                                        <span className="article-tip_span">{v.title}</span>
                                                     </div>
-                                                    <div className="text-li_text"  id={v.id}>
-                                                        <a onClick={(e) => { e.preventDefault() }} id={v.id}>
-                                                            <span className="text-li_label text-li_dian label-tag"  id={v.id}>{this.getTagName(v.tagId)}</span>
+                                                    <div className="text-li_text">
+                                                        <a onClick={(e) => { e.preventDefault() }}>
+                                                            <span className="text-li_label text-li_dian label-tag" >{this.getTagName(v.tagId)}</span>
                                                         </a>
-                                                        <span className="text-li_label text-li_dian label-userName"  id={v.id}>{v.userName || '佚名'}</span>
-                                                        <span className="text-li_label label-date"  id={v.id}>{getArticleDate(v.createDate)}</span>
-                                                        <h4 className="text-li_header"  id={v.id}>{v.title}</h4>
-                                                        <p className="text-li_center"  id={v.id}>{v.introduce}</p>
+                                                        <span className="text-li_label text-li_dian label-userName" >{v.userName || '佚名'}</span>
+                                                        <span className="text-li_label label-date">{getArticleDate(v.createDate)}</span>
+                                                        <h4 className="text-li_header">{v.title}</h4>
+                                                        <p className="text-li_center">{v.introduce}</p>
                                                     </div>
                                                 </li>
                                             )

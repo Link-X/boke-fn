@@ -15,7 +15,7 @@ module.exports = {
     main: entry
   },
   output: {
-    path: path.resolve('D:/aly/www/www'),
+    path: path.resolve('D:/aly/www/build/www'),
     filename: 'main.js'
   },
   module: {
