@@ -4,6 +4,7 @@ import Root from './router/Routes.js'
 import 'antd/lib/date-picker/style';
 import '@/common/less/reset.less'
 import { Form, Icon, Input, Button, Checkbox  } from 'antd'
+require('babel-polyfill')
 
 render( 
     <Root />,
