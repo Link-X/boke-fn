@@ -86,6 +86,17 @@ module.exports = {
     }),
     new webpack.HotModuleReplacementPlugin()
   ],
+  optimization: {
+    splitChunks: {
+      chunks: "initial",
+      cacheGroups: {
+        commons: {
+          name: "commons",
+          minChunks: 1
+        }
+      }
+    }
+  },
   resolve: {
     extensions: ['.js', '.json', 'css', '.wasm', '.mjs'],
     alias: {
