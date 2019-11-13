@@ -5,7 +5,7 @@ const webpack = require('webpack')
 const ExtractTextPlugin = require('extract-text-webpack-plugin')
 
 // 热更新和实际区分开
-const entry = process.env.npm_lifecycle_event === 'start' ? ['webpack-hot-middleware/client.js?reload=true', './src/index.js'] :  ['babel-polyfill', './src/index.js']
+const entry = process.env.npm_lifecycle_event === 'start' ? ['webpack-hot-middleware/client.js?reload=true', './src/index.js'] :  './src/index.js'
 
 function resolve (dir) {
   return path.resolve(__dirname, dir)
