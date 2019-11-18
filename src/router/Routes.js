@@ -16,31 +16,31 @@ const MyLoadingComponent = ({ isLoading, error }) => {
 };
 
 const App = Loadable({
-    loader: () => import('./../App.js'),
+    loader: () => import(/* webpackChunkName: "home" */ './../App.js'),
     loading: MyLoadingComponent
 })
 const Home = Loadable({
-    loader: () => import('@/view/home/index.js'),
+    loader: () => import(/* webpackChunkName: "home" */ '@/view/home/index.js'),
     loading: MyLoadingComponent
 })
 const Chat = Loadable({
-    loader: () => import('@/view/chat/index.js'),
+    loader: () => import(/* webpackChunkName: "home" */ '@/view/chat/index.js'),
     loading: MyLoadingComponent
 })
 const Login = Loadable({
-    loader: () => import('@/view/login/index.js'),
+    loader: () => import(/* webpackChunkName: "login" */ '@/view/login/index.js'),
     loading: MyLoadingComponent
 })
 const EditArticle = Loadable({
-    loader: () => import('@/view/edit-article/index.js'),
+    loader: () => import(/* webpackChunkName: "article" */ '@/view/edit-article/index.js'),
     loading: MyLoadingComponent
 })
 const ArticleDetials = Loadable({
-    loader: () => import('@/view/article-details/index.js'),
+    loader: () => import(/* webpackChunkName: "article" */ '@/view/article-details/index.js'),
     loading: MyLoadingComponent
 })
 const Datum = Loadable({
-    loader: () => import('@/view/datum/index.js'),
+    loader: () => import(/* webpackChunkName: "Datum" */ '@/view/datum/index.js'),
     loading: MyLoadingComponent
 })
 // const rootRoute = {

@@ -96,18 +96,9 @@ module.exports = {
       cacheGroups: {
         vendor: {
           name: 'vendor',
-          chunks: 'initial',
           priority: -10,
           reuseExistingChunk: false,
           test: /node_modules\/(.*)\.js/,
-        },
-        styles: {
-          name: 'styles',
-          test: /\.(scss|css)$/,
-          chunks: 'all',
-          minChunks: 1,
-          reuseExistingChunk: true,
-          enforce: true
         }
       }
     }
