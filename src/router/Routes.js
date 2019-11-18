@@ -1,13 +1,48 @@
 import React from 'react'
 import { Route, Switch, Redirect, HashRouter } from 'react-router-dom'
+import Loadable from 'react-loadable';
 
-import App from './../App.js'
-import Home from '@/view/home/index.js'
-import Chat from '@/view/chat/index.js'
-import Login from '@/view/login/index.js'
-import EditArticle from '@/view/edit-article/index.js'
-import ArticleDetials from '@/view/article-details/index.js'
-import Datum from '@/view/datum/index.js'
+
+const MyLoadingComponent = ({ isLoading, error }) => {
+    if (isLoading) {
+        return <div>Loading...</div>
+    }
+    else if (error) {
+        return <div>Sorry, there was a problem loading the page.</div>
+    }
+    else {
+        return null;
+    }
+};
+
+const App = Loadable({
+    loader: () => import('./../App.js'),
+    loading: MyLoadingComponent
+})
+const Home = Loadable({
+    loader: () => import('@/view/home/index.js'),
+    loading: MyLoadingComponent
+})
+const Chat = Loadable({
+    loader: () => import('@/view/chat/index.js'),
+    loading: MyLoadingComponent
+})
+const Login = Loadable({
+    loader: () => import('@/view/login/index.js'),
+    loading: MyLoadingComponent
+})
+const EditArticle = Loadable({
+    loader: () => import('@/view/edit-article/index.js'),
+    loading: MyLoadingComponent
+})
+const ArticleDetials = Loadable({
+    loader: () => import('@/view/article-details/index.js'),
+    loading: MyLoadingComponent
+})
+const Datum = Loadable({
+    loader: () => import('@/view/datum/index.js'),
+    loading: MyLoadingComponent
+})
 // const rootRoute = {
 //     path: '/xdb',
 //     getChildRoutes(location, cb) {
