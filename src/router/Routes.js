@@ -5,7 +5,7 @@ import Loadable from 'react-loadable';
 
 const MyLoadingComponent = ({ isLoading, error }) => {
     if (isLoading) {
-        return <div></div>
+        return <div>....</div>
     }
     else if (error) {
         return <div>Sorry, there was a problem loading the page.</div>
