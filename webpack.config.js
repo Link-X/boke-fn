@@ -57,7 +57,7 @@ module.exports = {
     ]
   },
   devServer: {
-    // contentBase: './build',//默认webpack-dev-server会为根文件夹提供本地服务器，如果想为另外一个目录下的文件提供本地服务器，应该在这里设置其所在目录（本例设置到"build"目录）
+    // contentBase: './build',//默认webpack-dev-server会为根文件夹提供本地服务器，如果想为另外一个目录下的文件提供本地服务器，应该在这里设置其所在目录（这里设置到"build"目录）
     historyApiFallback: true,
     inline: true,
     port: 3011,
@@ -86,22 +86,23 @@ module.exports = {
     }),
     new webpack.HotModuleReplacementPlugin()
   ],
-  optimization: {
-    runtimeChunk: {
-      name: "manifest"
-    },
-    splitChunks: {
-      chunks: 'async',
-      minSize: 30000,
-      cacheGroups: {
-        vendor: {
-          name: 'vendor',
-          priority: -10,
-          reuseExistingChunk: false,
-          test: /node_modules\/(.*)\.js/,
-        }
+    optimization: {
+      runtimeChunk: {
+          "name": "manifest"
+      },
+      splitChunks: {
+          chunks: 'all',
+          cacheGroups: {
+              common: {
+                  minChunks: 2,
+                  name: 'commons',
+                  chunks: 'async',
+                  priority: 10,
+                  reuseExistingChunk: true,
+                  enforce: true
+              }
+          }
       }
-    }
   },
   resolve: {
     extensions: ['.js', '.json', 'css', '.wasm', '.mjs'],
