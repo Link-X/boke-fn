@@ -36,17 +36,21 @@ class HeaderDom extends Component {
                 navBoxCalss: navBoxCalss ? '' : 'header-nav-collapse-active'
             })
         }
+        this.clickLog = () => {
+            localStorage.removeItem('article')
+            window.location.href = '/'
+        }
     }
     componentDidMount () {
         this.init()
     }
     render () {
         return (
-            <nav className={`xdb-home_header ${this.props.boxIndex === 0 ? '' : 'xdb_home_header_and'}`}>
+            <nav className="xdb-home_header">
                 <div className="home-header_concent" data-ind={this.props.boxIndex}>
-                    <h2 className="home-header_login">xdb</h2>    
+                    <h2 className="home-header_login" onClick={this.clickLog}>xdb</h2>    
                     <div className={`header-nav-collapse ${this.state.navBoxCalss}`}>
-                        <ul ref="uli" className="nav-collapse_ul" onClick={(e) => { this.tabNav(e) }}>
+                        <ul ref="uli" className={`nav-collapse_ul ${this.props.boxIndex === 1 ? 'nab-collapse_top2' : ''}`} onClick={(e) => { this.tabNav(e) }}>
                             {
                                 this.state.navList.map(v => {
                                     return (
@@ -69,7 +73,7 @@ class HeaderDom extends Component {
                         </ul>
                     </div>
                     <div className="navBtn" onClick={(e) => { this.showNav() }}>
-                        <button className={`toggle-btn ${this.state.navIcon}`}>
+                        <button className={`toggle-btn ${this.state.navIcon} ${this.props.boxIndex === 1 ? 'toggle-btn2' :''}`}>
                             <span className="icon-bar"></span>
                             <span className="icon-bar"></span>
                             <span className="icon-bar"></span>

@@ -16,13 +16,10 @@ class PhotoAlbum extends Component {
     }
     componentDidMount() {
         getPhoto().then(res => {
-            if (res && res.data && res.data.code === 0) {
-                const imgData = res.data.data || []
-                this.setState({
-                    spinning: false,
-                    imgData
-                })
-            }
+            this.setState({
+                spinning: false,
+                imgData: res
+            })
         })
     }
     getImage(e) {

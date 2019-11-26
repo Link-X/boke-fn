@@ -5,10 +5,12 @@ import Loadable from 'react-loadable';
 
 const MyLoadingComponent = ({ isLoading, error }) => {
     if (isLoading) {
-        return <div>....</div>
+        return <div style={{width: '100%', position: 'relative', height: '100%', fontSize: '16px'}}>
+                    <p style={{position: 'absolute', bottom: '50px', right: '50px', color: '#333'}}>加载中....</p>
+                </div>
     }
     else if (error) {
-        return <div>Sorry, there was a problem loading the page.</div>
+        return <div>服务器崩咯！</div>
     }
     else {
         return null;

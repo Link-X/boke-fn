@@ -1,4 +1,5 @@
 import { get, post, put } from '@/common/utils/http.js'
+import store from './store'
 
 export const login = (params = { userName: '' , password: ''}) => {
     // 登陆
@@ -33,7 +34,18 @@ export const getArticleList = (params = { page: 1, pageSize: 10 }) => {
 
 export const getTags = (parmas = {}) => {
     // 获取文字分类
-    return get('/get/tags', {}).then(res => res.data)
+    const data = store.get('tags')
+    if (data) {
+        return new Promise((res, rej) => {
+            res(data)
+        })
+    }
+    return get('/get/tags', {}).then(res => {
+        if (res.data) {
+            store.set('tags', res.data)
+        }
+        return res.data
+    })
 }
 
 export const getSimpleWeather = (params = {}) => {
@@ -67,12 +79,40 @@ export const getUserDate = () => {
 
 export const getMajor = () => {
     // 获取轮播等
-    return get('/get/article/major').then(res => res)
+    const data = store.get('major')
+    if (data) {
+        return new Promise((res, rej) => {
+            res(data)
+        })
+    }
+    return get('/get/article/major').then(res => {
+        const data = res && res.data && res.data.data && res.data.data
+        if (data) {
+            store.set('major', res)
+        }
+        return res
+    })
 }
 
-export const getArticle = (params) => {
+export const getArticle = (params, isStore) => {
     // 获取文章列表
-    return get('/get/article/list', { params }).then(res => res)
+    const data = store.get('articleList')
+    const preParams = store.get('articleParams') || {}
+    if (data && preParams.page === params.page || (data && isStore)) {
+        return new Promise(function (res, rej) { 
+            res({data, page: preParams.page, isStore: true})
+         })
+    } else {
+        return get('/get/article/list', { params }).then(res => {
+            const list = res && res.data && res.data.data && res.data.data && res.data.data.list
+            if (list && list.length) {
+                store.set('articleParams', params)
+                const storeList = store.get('articleList') || []
+                return {data: store.set('articleList', storeList.concat(list)), page: params.page, isStore: false}
+            }
+            return { data: store.get('articleList') || [], isStore: true, page: preParams.page }
+        })
+    }
 }
 
 export const addArticle = (params) => {
@@ -97,7 +137,17 @@ export const loveArticle = (params) => {
 
 export const getPhoto = (params = {}) => {
     // 获取相册
-    return get('/get/photo/data')
+    const imgData = store.get('imgData')
+    if (imgData && imgData.length) {
+        return new Promise((res, rej) => {
+            res(imgData)
+        })
+    }
+    return get('/get/photo/data').then(res => {
+        if (res && res.data && res.data.code === 0) {
+            return store.set('imgData', res.data.data || [])
+        }
+    })
 }
 
 export const editArticleDetials = (params = {}) => {

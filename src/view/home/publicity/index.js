@@ -76,6 +76,7 @@ class Home extends Component {
                 })
               }, 500)
             }
+            this.props.boxIndexChange(boxIndex)
           })
         }
         this.clickTab = (url) => {

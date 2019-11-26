@@ -24,18 +24,18 @@ class Article extends Component {
                 }
             })
         }
-        this.getArticle = (page = 0) => {
+        this.getArticle = (pageIndex = 0, isStore) => {
             getArticle({
-                page: page,
+                page: pageIndex,
                 pageSize: 10
-            }).then(res => {
-                const data = (res && res.data) || {}
-                if (data.code === 0 && data.data && data.data.list && data.data.list.length) {
+            }, isStore).then(res => {
+                console.log(res)
+                if (res && res.data && res.data.length) {
                     let { list } = this.state
-                    list.list = list.list.concat(res.data.data.list)
+                    list.list = res.data
                     this.setState({
                         list,
-                        page: page
+                        page: res.page
                     })
                 }
             })
@@ -109,15 +109,15 @@ class Article extends Component {
         this.goDetiles = (e) => {
             const ev = window.event || e;
             const path = ev.path || (ev.composedPath && ev.composedPath());
-            let tagId = ''
+            let tagid = ''
             path.forEach(v => {
                 if (v.nodeName === 'LI') {
-                    tagId = v.getAttribute('tagId')
+                    tagid = v.getAttribute('tagid')
                 }
             })
-            if (e.target.nodeName !== "UL" && tagId) {
+            if (e.target.nodeName !== "UL" && tagid) {
                 this.props.history.push({
-                    pathname: '/article-detials/' + tagId
+                    pathname: '/article-detials/' + tagid
                 })
             }
         }
@@ -129,7 +129,7 @@ class Article extends Component {
     }
     componentWillMount() {
         this.getNav()
-        this.getArticle()
+        this.getArticle(0, true)
         this.getMajor()
         this.initScroll()
     }
@@ -166,7 +166,7 @@ class Article extends Component {
                                 {
                                     list.major2.map(v => {
                                         return (
-                                            <li key={v.id} tagId={v.id}>
+                                            <li key={v.id} tagid={v.id}>
                                                 <a onClick={(e) => { e.preventDefault() }}>
                                                     <img src={v.articleImg}/>
                                                 </a>
@@ -189,7 +189,7 @@ class Article extends Component {
                                     list.list.map(v => {
                                         if (v.major !== 1 && v.major2 !== 1) {
                                             return (
-                                                <li className="center-text_li" key={v.id} tagId={v.id}>
+                                                <li className="center-text_li" key={v.id} tagid={v.id}>
                                                     <div className="text-li_left">
                                                         <img src={v.articleImg} />
                                                         <span className="article-tip_span">{v.title}</span>
