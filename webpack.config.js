@@ -91,16 +91,18 @@ module.exports = {
           "name": "manifest"
       },
       splitChunks: {
-          chunks: 'all',
           cacheGroups: {
-              common: {
-                  minChunks: 2,
-                  name: 'commons',
-                  chunks: 'async',
-                  priority: 10,
-                  reuseExistingChunk: true,
-                  enforce: true
-              }
+            vendor: {
+              priority: 1, //添加权重
+              test: /node_modules/, //把这个目录下符合下面几个条件的库抽离出来
+              chunks: 'initial', //刚开始就要抽离
+              minChunks: 2 //重复2次使用的时候需要抽离出来
+            },
+            common: {
+              //公共的模块
+              chunks: 'initial',
+              minChunks: 2
+            }
           }
       }
   },
