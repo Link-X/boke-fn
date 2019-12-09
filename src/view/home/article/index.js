@@ -144,8 +144,13 @@ class Article extends Component {
                                 {
                                     list.major.map(v => {
                                         return (
-                                            <div className="banner-left_item" key={v.id} onClick={() => { this.goDetiles2(v.id) }}>
-                                                <img src={v.articleImg} />
+                                            <div 
+                                                className="banner-left_item" 
+                                                key={v.id} 
+                                                onClick={() => { this.goDetiles2(v.id) }}>
+                                                <div 
+                                                    className="banner-left_item_back"
+                                                    style={{backgroundImage: `url(${v.articleImg})`}}></div>
                                                 <span className="article-tip_span">{v.title}</span>
                                             </div>
                                         )
@@ -166,9 +171,12 @@ class Article extends Component {
                                 {
                                     list.major2.map(v => {
                                         return (
-                                            <li key={v.id} tagid={v.id}>
+                                            <li 
+                                                key={v.id} 
+                                                tagid={v.id} 
+                                                style={{backgroundImage: `url(${v.articleImg})`}}
+                                                className="article-banner_four">
                                                 <a onClick={(e) => { e.preventDefault() }}>
-                                                    <img src={v.articleImg}/>
                                                 </a>
                                                 <span className="article-tip_span">{v.title}</span>
                                             </li>
@@ -189,9 +197,12 @@ class Article extends Component {
                                     list.list.map(v => {
                                         if (v.major !== 1 && v.major2 !== 1) {
                                             return (
-                                                <li className="center-text_li" key={v.id} tagid={v.id}>
-                                                    <div className="text-li_left">
-                                                        <img src={v.articleImg} />
+                                                <li className="center-text_li" 
+                                                    key={v.id} 
+                                                    tagid={v.id}>
+                                                    <div 
+                                                        style={{backgroundImage: `url(${v.articleImg})`}}
+                                                        className="text-li_left">
                                                         <span className="article-tip_span">{v.title}</span>
                                                     </div>
                                                     <div className="text-li_text">
