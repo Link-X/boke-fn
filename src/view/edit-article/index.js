@@ -18,6 +18,7 @@ class editArticle extends React.Component {
         title: '',
         articleImg: ''
       },
+      preview: true,
       tagData: []
     }
     this.uploadImg = this.uploadImg.bind(this)
@@ -26,6 +27,7 @@ class editArticle extends React.Component {
     this.setInp = this.setInp.bind(this)
     this.selectTag = this.selectTag.bind(this)
     this.removeImg = this.removeImg.bind(this)
+    this.activedPreview = this.activedPreview.bind(this)
   }
   videtd() {
     const { form } = this.state
@@ -52,6 +54,11 @@ class editArticle extends React.Component {
       }
     }
     return msg
+  }
+  activedPreview() {
+    this.setState({
+      preview: !this.state.preview
+    })
   }
   submit(e) {
     e.stopPropagation()
@@ -121,8 +128,12 @@ class editArticle extends React.Component {
       form
     })
   }
-  clickFile = () => {
-    this.refs.uploadInput.click()
+  clickFile = (editImage) => {
+    this.setState({
+      editImage: editImage
+    }, () => {
+      this.refs.uploadInput.click()
+    })
   }
   getImgSize(base64url = '') {
     // 获取图片base64大小
@@ -149,7 +160,7 @@ class editArticle extends React.Component {
       cb(compressBase64)
     }
   }
-  uploadImg(e) {
+  uploadImg(e, edit) {
     const file = e.target.files[0]
     const fileType = file.type || 'image/png'
     if (fileType.indexOf('image') === -1) {
@@ -171,18 +182,32 @@ class editArticle extends React.Component {
             file: base64
           }).then(res => {
             if (res && res.data && res.data.code === 0) {
-              const { form } = _self.state
-              form.articleImg = res.data.data.path
-              _self.setState({
-                form
-              }, () => {
-                _self.refs.uploadInput.value = ''
-              })
+              const path = res.data.data.path
+              _self.state.editImage ? _self.enditImage.apply(_self, [path]) :_self.setCover.apply(_self, [path])
             }
           })
       })
       
    }
+  }
+  enditImage(path) {
+    const { form } = this.state
+    form.markdown += `  ![](${path})`
+    this.setState({
+      form,
+      editImage: false
+    }, () => {
+      this.refs.uploadInput.value = ''
+    })
+  }s
+  setCover(path) {
+    const { form } = this.state
+    form.articleImg = path
+    this.setState({
+      form
+    }, () => {
+      this.refs.uploadInput.value = ''
+    })
   }
   removeImg() {
     const { form } = this.state
@@ -223,7 +248,7 @@ class editArticle extends React.Component {
     this.getNav()
   }
   render() {
-    const { form, tagData } = this.state
+    const { form, tagData, preview } = this.state
     return (
       <div className="edit-article_box">
         <input 
@@ -245,7 +270,7 @@ class editArticle extends React.Component {
               <Popover placement="bottom" title="上传图片(在这取url)" content={
                 <div className="content">
                   { 
-                    !this.state.form.articleImg ? <p onClick={this.clickFile}>点击添加封面</p> :
+                    !this.state.form.articleImg ? <p onClick={() => { this.clickFile() }}>点击添加封面</p> :
                     <div className="edit-article_img_box">
                       <span onClick={this.removeImg}>x</span>
                       <img src={this.state.form.articleImg} style={{width: '100%', height: '100%'}}></img>
@@ -299,20 +324,35 @@ class editArticle extends React.Component {
           </div>
         </div>
         <div className="edit-article-edit">
-          <div className="edit-article-textare editor-pane">
+          <div className="edit-article-textare editor-pane" style={{display: `${preview ? 'block' : 'none'}`}}>
               <CodeMirrorEditor
                 value={form.markdown} 
                 onChange={this.onChange}>
               </CodeMirrorEditor>
           </div>
-          <div className="edit-article-markdown result-pane">
+          <div className={`edit-article-markdown result-pane ${!preview ? 'preview-edit' : 'engter-edit'}`}>
               <ReactMarkdown 
                 className="markdown-body"
                 skipHtml={true}
                 renderers={{code: CodeStyle}}
-                source={form.markdown}></ReactMarkdown>
+                source={form.markdown}>
+              </ReactMarkdown>
+              <ul className="textare-tools">
+                <li onClick={(e) => {this.clickFile(true)}}>
+                  <i className="iconfont icon-shangchuan"></i>
+                </li>
+                <li onClick={this.activedPreview}>
+                  <i className="iconfont icon-BMSzhuanqu_suofang"></i>
+                </li>
+              </ul>
           </div>
         </div>
+        {
+          !preview && 
+          <div className="page-tools" onClick={this.activedPreview}>
+              <i className="iconfont icon-suofang"></i>
+          </div>
+        }
       </div>
     )
   }
