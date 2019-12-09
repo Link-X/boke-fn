@@ -342,17 +342,11 @@ class editArticle extends React.Component {
                   <i className="iconfont icon-shangchuan"></i>
                 </li>
                 <li onClick={this.activedPreview}>
-                  <i className="iconfont icon-BMSzhuanqu_suofang"></i>
+                  <i className={`iconfont ${!preview ? 'icon-BMSzhuanqu_suofang' : 'icon-suofang'}`}></i>
                 </li>
               </ul>
           </div>
         </div>
-        {
-          !preview && 
-          <div className="page-tools" onClick={this.activedPreview}>
-              <i className="iconfont icon-suofang"></i>
-          </div>
-        }
       </div>
     )
   }
