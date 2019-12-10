@@ -44,6 +44,7 @@ class NormalLoginForm extends Component {
         const { getFieldDecorator } = this.props.form;
         return (
         <Form onSubmit={this.handleSubmit} className='form_box'>
+            <div className="login_title">登陆 / 注册</div>
             <Form.Item>
                 {getFieldDecorator('userName', {
                     rules: [{ required: true, message: '请输入你的登陆账号!' }],
@@ -94,13 +95,9 @@ class NormalLoginForm extends Component {
                         登陆
                     </Button>
                 </div>
-                <a href='' style={{
-                    textAlign: 'center',
-                    display: 'inline-block',
-                    width: '100%' 
-                }}>
+                <div className="login_tip">
                     登陆即可完成注册!
-                </a>
+                </div>
             </Form.Item>
         </Form>
         );

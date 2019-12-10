@@ -1,5 +1,5 @@
 import React from 'react'
-import { message, Popover, Button } from 'antd'
+import { message, Popover, Button, Tooltip } from 'antd'
 import ReactMarkdown from 'react-markdown'
 import CodeMirrorEditor from './code-mirror-editor.js'
 import CodeStyle from './code-style.js'
@@ -267,7 +267,7 @@ class editArticle extends React.Component {
           </div>
           <div className="edit-article-btn">
             <div style={{marginRight: '10px',display: 'flex', 'alignItems': 'center'}}>
-              <Popover placement="bottom" title="上传图片(在这取url)" content={
+              <Popover placement="bottom" title="上传封面" content={
                 <div className="content">
                   { 
                     !this.state.form.articleImg ? <p onClick={() => { this.clickFile() }}>点击添加封面</p> :
@@ -339,10 +339,14 @@ class editArticle extends React.Component {
               </ReactMarkdown>
               <ul className="textare-tools">
                 <li onClick={(e) => {this.clickFile(true)}}>
-                  <i className="iconfont icon-shangchuan"></i>
+                  <Tooltip title="上传图片">
+                    <i className="iconfont icon-shangchuan"></i>
+                  </Tooltip>
                 </li>
                 <li onClick={this.activedPreview}>
-                  <i className={`iconfont ${!preview ? 'icon-BMSzhuanqu_suofang' : 'icon-suofang'}`}></i>
+                  <Tooltip title={`${preview ? '预览' : '收起'}`}>
+                    <i className={`iconfont ${!preview ? 'icon-BMSzhuanqu_suofang' : 'icon-suofang'}`}></i>
+                  </Tooltip>
                 </li>
               </ul>
           </div>
