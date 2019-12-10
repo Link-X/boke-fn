@@ -3,6 +3,9 @@ import 'codemirror/lib/codemirror.css'
 import 'codemirror/theme/seti.css'
 
 import CodeMirror from 'codemirror'
+import 'codemirror/addon/search/search'
+import 'codemirror/addon/search/searchcursor'
+import 'codemirror/addon/search/jump-to-line'
 import 'codemirror/addon/hint/show-hint.css'
 import 'codemirror/addon/hint/show-hint.js'
 import 'codemirror/mode/javascript/javascript.js'
@@ -22,8 +25,6 @@ import 'codemirror/addon/edit/closebrackets.js'
 import 'codemirror/mode/markdown/markdown.js'
 import 'codemirror/keymap/sublime.js'
 import 'codemirror/addon/dialog/dialog.js'
-import 'codemirror/addon/search/search.js'
-import 'codemirror/addon/search/searchcursor.js'
 import 'codemirror/addon/comment/comment.js'
 import 'codemirror/addon/wrap/hardwrap.js'
 import 'codemirror/addon/scroll/simplescrollbars.css'
@@ -56,7 +57,6 @@ class CodeMirrorEditor extends React.Component {
   componentDidMount() {
     const isTextArea = this.props.forceTextArea || IS_MOBILE;
     if (!isTextArea) {
-        console.log(this.props);
       this.editor = CodeMirror.fromTextArea(this.editorRef.current, {
         keyMap: 'sublime',
         mode: 'markdown',
@@ -65,6 +65,7 @@ class CodeMirrorEditor extends React.Component {
         taskLists: true,
         strikethrough: true,
         emoji: false,
+        lineWrapping: true,
         value: this.props.value,
         autoRefresh: true,
         json: true,
@@ -82,19 +83,19 @@ class CodeMirrorEditor extends React.Component {
     if (!this.editor) {
       return
     }
-
     if (this.props.value) {
       if (this.editor.getValue() !== this.props.value) {
         this.editor.setValue(this.props.value);
       }
     }
   }
-
+  setCursor(w, h) {
+    this.editor.doc.setCursor(this.editor.doc.lineCount() - 1, 0)
+  }
   handleChange() {
     if (!this.editor) {
       return
     }
-
     const value = this.editor.getValue()
     if (value === this.props.value) {
       return

@@ -197,6 +197,7 @@ class editArticle extends React.Component {
       form,
       editImage: false
     }, () => {
+      this.refs.codeMirror.setCursor()
       this.refs.uploadInput.value = ''
     })
   }s
@@ -326,6 +327,7 @@ class editArticle extends React.Component {
         <div className="edit-article-edit">
           <div className="edit-article-textare editor-pane" style={{display: `${preview ? 'block' : 'none'}`}}>
               <CodeMirrorEditor
+                ref="codeMirror"
                 value={form.markdown} 
                 onChange={this.onChange}>
               </CodeMirrorEditor>
