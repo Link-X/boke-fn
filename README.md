@@ -4,7 +4,13 @@
 ###  
 技术栈
 
-react、webpack、react-markdown、codemirror  
+react、webpack、react-markdown、codemirror    
 
-接口地址地址：
+yarn install  
+
+yarn start  
+
+yarn build  
+
+接口代码地址：
     ![https://github.com/Link-X/boke-api](https://github.com/Link-X/boke-api)
