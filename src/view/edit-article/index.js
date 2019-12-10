@@ -28,6 +28,11 @@ class editArticle extends React.Component {
     this.selectTag = this.selectTag.bind(this)
     this.removeImg = this.removeImg.bind(this)
     this.activedPreview = this.activedPreview.bind(this)
+    this.editOnScroll = this.editOnScroll.bind(this)
+  }
+  editOnScroll(e) {
+    console.log(e.doc.scrollTop)
+    this.refs.previewBox.scrollTo(0, e.doc.scrollTop)
   }
   videtd() {
     const { form } = this.state
@@ -328,11 +333,14 @@ class editArticle extends React.Component {
           <div className="edit-article-textare editor-pane" style={{display: `${preview ? 'block' : 'none'}`}}>
               <CodeMirrorEditor
                 ref="codeMirror"
+                editOnScroll={this.editOnScroll}
                 value={form.markdown} 
                 onChange={this.onChange}>
               </CodeMirrorEditor>
           </div>
-          <div className={`edit-article-markdown result-pane ${!preview ? 'preview-edit' : 'engter-edit'}`}>
+          <div 
+              ref="previewBox"
+              className={`edit-article-markdown result-pane ${!preview ? 'preview-edit' : 'engter-edit'}`}>
               <ReactMarkdown 
                 className="markdown-body"
                 skipHtml={true}

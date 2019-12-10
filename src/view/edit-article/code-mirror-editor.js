@@ -76,6 +76,7 @@ class CodeMirrorEditor extends React.Component {
         onChange: this.props.onChange
       });
       this.editor.on('change', this.handleChange);
+      this.editor.on('scroll', this.props.editOnScroll);
     }
   }
 
