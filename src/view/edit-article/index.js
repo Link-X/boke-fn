@@ -8,7 +8,7 @@ import '@/common/less/edit.less'
 import 'github-markdown-css'
 
 
-class editArticle extends React.Component {
+class EditArticle extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
@@ -31,8 +31,12 @@ class editArticle extends React.Component {
     this.editOnScroll = this.editOnScroll.bind(this)
   }
   editOnScroll(e) {
-    console.log(e.doc.scrollTop)
-    this.refs.previewBox.scrollTo(0, e.doc.scrollTop)
+    const scrollTop = e.doc.scrollTop
+    const valHeight = e.doc.height
+    const boxHeight = this.refs.editArticle.getBoundingClientRect().height 
+    const previewHeight = document.querySelector('.markdown-body').getBoundingClientRect().height 
+    const scale = (valHeight -  boxHeight) / (previewHeight - boxHeight)
+    this.refs.previewBox.scrollTo(0, scrollTop / scale)
   }
   videtd() {
     const { form } = this.state
@@ -330,7 +334,10 @@ class editArticle extends React.Component {
           </div>
         </div>
         <div className="edit-article-edit">
-          <div className="edit-article-textare editor-pane" style={{display: `${preview ? 'block' : 'none'}`}}>
+          <div 
+                ref="editArticle"
+                className="edit-article-textare editor-pane" 
+                style={{display: `${preview ? 'block' : 'none'}`}}>
               <CodeMirrorEditor
                 ref="codeMirror"
                 editOnScroll={this.editOnScroll}
@@ -343,6 +350,7 @@ class editArticle extends React.Component {
               className={`edit-article-markdown result-pane ${!preview ? 'preview-edit' : 'engter-edit'}`}>
               <ReactMarkdown 
                 className="markdown-body"
+                id="markdownBody"
                 skipHtml={true}
                 renderers={{code: CodeStyle}}
                 source={form.markdown}>
@@ -366,4 +374,4 @@ class editArticle extends React.Component {
   }
 }
 
-export default editArticle
+export default EditArticle
