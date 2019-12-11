@@ -33,7 +33,7 @@ class EditArticle extends React.Component {
   editOnScroll(e) {
     const scrollTop = e.doc.scrollTop
     const valHeight = e.doc.height
-    const boxHeight = this.refs.editArticle.getBoundingClientRect().height 
+    const boxHeight = this.refs.editArticle.getBoundingClientRect().height
     const previewHeight = document.querySelector('.markdown-body').getBoundingClientRect().height 
     const scale = (valHeight -  boxHeight) / (previewHeight - boxHeight)
     this.refs.previewBox.scrollTo(0, scrollTop / scale)
@@ -362,7 +362,7 @@ class EditArticle extends React.Component {
                   </Tooltip>
                 </li>
                 <li onClick={this.activedPreview}>
-                  <Tooltip title={`${preview ? '预览' : '收起'}`}>
+                  <Tooltip title={`${preview ? '预览(不要刷新）' : '收起(刷新会丢失)'}`}>
                     <i className={`iconfont ${!preview ? 'icon-BMSzhuanqu_suofang' : 'icon-suofang'}`}></i>
                   </Tooltip>
                 </li>
