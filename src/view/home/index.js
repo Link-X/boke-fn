@@ -28,7 +28,7 @@ class Home extends Component {
           },
           '/login'() {
             if (localStorage.getItem('token')) {
-              message.info('ni已经登陆啦')
+              message.info('ni已经登陆拉')
               return
             }
             this.routerPush()

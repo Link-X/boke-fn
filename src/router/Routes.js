@@ -1,15 +1,14 @@
 import React from 'react'
 import { Route, Switch, Redirect, HashRouter } from 'react-router-dom'
 import Loadable from 'react-loadable';
+import LoadingBox from '@/common/loading/index'
 
 
 const MyLoadingComponent = ({ isLoading, error }) => {
     if (isLoading) {
-        return <div style={{width: '100%', position: 'relative', height: '100%', fontSize: '18px'}}>
-                    <p style={{position: 'absolute', bottom: '50px', right: '50px', color: '#007fff'}}>加载中....</p>
-                </div>
+        return <LoadingBox></LoadingBox>
     }
-    else if (error) {
+    else if (!error) {
         return <div>js代码报错了！<a href="/" target="_blank">再试一次</a></div>
     }
     else {
