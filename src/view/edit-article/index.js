@@ -59,7 +59,7 @@ Ordered 有序列表：
 
 |姓名|性别|年龄|
 |:---:|:---:|:---:|:---:|
-| 许道斌 | 男 | 20岁 |
+| 许道斌 | 男 | 18岁 |
 `
 class EditArticle extends React.Component {
   constructor(props) {
