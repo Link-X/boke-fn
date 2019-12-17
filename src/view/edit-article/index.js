@@ -6,13 +6,7 @@ import CodeStyle from './code-style.js'
 import { getTags, addArticle, uploadImage, getArticleDetails, editArticleDetials } from '@/js/api.js'
 import '@/common/less/edit.less'
 import 'github-markdown-css'
-
-class EditArticle extends React.Component {
-  constructor(props) {
-    super(props)
-    this.state = {
-      form: {
-        markdown: `
+const markdownText =  `
 #  H1
 ##  H2
 ###  H3
@@ -66,7 +60,13 @@ Ordered 有序列表：
 |姓名|性别|年龄|
 |:---:|:---:|:---:|:---:|
 | 许道斌 | 男 | 20岁 |
-`,
+`
+class EditArticle extends React.Component {
+  constructor(props) {
+    super(props)
+    this.state = {
+      form: {
+        markdown: markdownText,
         tagId: '',
         title: '',
         articleImg: ''
