@@ -3,9 +3,12 @@ import { message, Popover, Button, Tooltip } from 'antd'
 import ReactMarkdown from 'react-markdown'
 import CodeMirrorEditor from './code-mirror-editor.js'
 import CodeStyle from './code-style.js'
+import verify from '@/common/utils/verify.js'
 import { getTags, addArticle, uploadImage, getArticleDetails, editArticleDetials } from '@/js/api.js'
 import '@/common/less/edit.less'
 import 'github-markdown-css'
+
+const verifyFunc = new verify({}, {})
 const markdownText =  `
 #  H1
 ##  H2
@@ -91,47 +94,46 @@ class EditArticle extends React.Component {
     const scale = (valHeight -  boxHeight) / (previewHeight - boxHeight)
     this.refs.previewBox.scrollTo(0, scrollTop / scale)
   }
-  videtd() {
-    const { form } = this.state
-    let msg = {
-      ok: true,
-      msg: ''
-    }
-    if (!form.markdown || form.markdown.length < 60) {
-      msg = {
-        ok: false,
-        msg: '内容请最少输入60字'
-      }
-    }
-    if (!form.tagId && form.tagId !== 0) {
-      msg = {
-        ok: false,
-        msg: '请选择标签'
-      }
-    }
-    if (!form.title || form.title.length < 3) {
-      msg = {
-        ok: false,
-        msg: '请输入标题,最少3个字符'
-      }
-    }
-    return msg
-  }
   activedPreview() {
     this.setState({
       preview: !this.state.preview
     })
   }
   submit(e) {
-    console.log(this.state.form.markdown)
-    e.stopPropagation()
-    const msg = this.videtd()
-    if (!msg.ok) {
-        message.error(msg.msg)
-        return
-    }
     const { form } = this.state
-    if (form.id) {
+    e.stopPropagation()
+    verifyFunc.$init(form, {
+      markdown: [{
+        required: true,
+        message: '内容请最少输入60字',
+        type: 'string',
+        min: 60,
+        max: 99999999
+      }],
+      tagId: [{
+        message: '请选择标签',
+        validator: (val, cb) => {
+          if (!val && val !== 0) {
+            cb({message: '请选择标签'})
+          } else {
+            cb()
+          }
+        }
+      }],
+      title: [{
+        required: true,
+        message: '请输入3-50字文章标题',
+        type: 'string',
+        min: 3,
+        max: 50
+      }]
+    })
+    verifyFunc.validate(status => {
+      if (status.result) {
+        message.error(status.message)
+        return
+      }
+      if (form.id) {
         editArticleDetials(form).then(res => {
             if(res && res.data && res.data.code === 0) {
               message.success('编辑成功')
@@ -140,16 +142,17 @@ class EditArticle extends React.Component {
               message.error('编辑失败')
             }
         })
-    } else {
-        addArticle(form).then(res => {
-            if (res && res.data && res.data.code === 0) {
-                message.success('保存成功')
-                this.props.history.go(-1)
-            } else {
-              message.error('保存失败')
-            }
-        })
-    }
+      } else {
+          addArticle(form).then(res => {
+              if (res && res.data && res.data.code === 0) {
+                  message.success('保存成功')
+                  this.props.history.go(-1)
+              } else {
+                message.error('保存失败')
+              }
+          })
+      }
+    })
   }
   getNav() {
     getTags().then(res => {
