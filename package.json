@@ -6,7 +6,7 @@
   "author": "许道斌的个人博客",
   "license": "MIT",
   "scripts": {
-    "start": "webpack-dev-server --open --mode development --content-base ./public",
+    "start": "webpack-dev-server --open --mode development --content-base",
     "build": "webpack --progress --hide-modules --mode production --config webpack.config.js"
   },
   "dependencies": {

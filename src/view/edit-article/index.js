@@ -45,7 +45,7 @@ Ordered 有序列表：
     - 功能3
     
 [链接](http://www.w3cschool.cn/ "W3Cschool")
-![图片代替文字](http://statics.w3cschool.cn/images/w3c/index-logo.png "标题文字")
+![图片代替文字](http://39.108.184.64/image/111837354148716541576488564080.jpg "标题文字")
 
 段落
 > Email-style angle brackets
