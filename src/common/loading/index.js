@@ -14,4 +14,16 @@ function LoadingBox () {
          </div>
 }
 
-export default LoadingBox
+const MyLoadingComponent = ({ isLoading, error }) => {
+    if (isLoading) {
+        return <LoadingBox></LoadingBox>
+    }
+    else if (!error) {
+        return <div>js代码报错了！<a href="/" target="_blank">再试一次</a></div>
+    }
+    else {
+        return null;
+    }
+};
+
+export default MyLoadingComponent

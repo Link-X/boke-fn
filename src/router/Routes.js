@@ -1,20 +1,7 @@
 import React from 'react'
 import { Route, Switch, Redirect, HashRouter } from 'react-router-dom'
 import Loadable from 'react-loadable';
-import LoadingBox from '@/common/loading/index'
-
-
-const MyLoadingComponent = ({ isLoading, error }) => {
-    if (isLoading) {
-        return <LoadingBox></LoadingBox>
-    }
-    else if (!error) {
-        return <div>js代码报错了！<a href="/" target="_blank">再试一次</a></div>
-    }
-    else {
-        return null;
-    }
-};
+import MyLoadingComponent from '@/common/loading/index'
 
 const App = Loadable({
     loader: () => import(/* webpackChunkName: "home" */ './../App.js'),
