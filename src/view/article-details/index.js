@@ -5,6 +5,7 @@ import { formatDateTime, getArticleDate } from '@/common/utils/utils.js'
 import { Input, Button, message } from 'antd';
 import ReactMarkdown from 'react-markdown'
 import CodeStyle from '@/view/edit-article/code-style.js'
+import HeadingBlock from './heading-block.js'
 import '@/common/less/article-details.less'
 import 'github-markdown-css'
 const { TextArea } = Input;
@@ -13,10 +14,10 @@ class ArticleDetails extends Component {
         super(props)
         this.state = {
           details: {
-            userName: 'xxx',
-            createDate: '2019-10-10',
+            userName: '***',
+            createDate: '2019-10-10 10:10',
             readNumber: 0,
-            title: 'title',
+            title: '标题',
             loverArticle: '',
             markdown: '<div></div>',
           },
@@ -83,6 +84,7 @@ class ArticleDetails extends Component {
         }).then(res => {
           if (res && res.data && res.data.code === 0) {
             const data = res.data.data
+            this.initNav(data.markdown)
             this.setState({
               details: data,
               pinglunList: [...data.pinglunList]
@@ -90,6 +92,39 @@ class ArticleDetails extends Component {
           }
         })
       }
+    }
+    initNav(content) {
+      let nav = [];
+      let tempArr = [];
+      content.replace(/(#+)[^#][^\n]*?(?:\n)/g, function(match, m1, m2) {
+          let title = match.replace('\n', '');
+          let level = m1.length;
+          tempArr.push({
+              title: title.replace(/^#+/, '').replace(/\([^)]*?\)/, ''),
+              level: level,
+              children: []
+          });
+      });
+      console.log(tempArr)
+      
+      function initNav2(arr, arrObj, level) {
+        arr.forEach((v, i) => {
+          if(v.level > level) {
+            v.children.push(arr.splice(i, 0))
+            initNav2(arr, v.children, v.level)
+          } else {
+            arrObj.push(arr.splice(i, 0))
+          }
+        })
+      }
+      // 只处理一级二级标题，以及添加与id对应的index值
+      nav = tempArr.filter(item => item.level <= 2);
+      let index = 0;
+      nav = nav.map(item => {
+          item.index = index++;
+          return item;
+      });
+      console.log(nav)
     }
     loverArticle() {
       loveArticle({
@@ -152,7 +187,10 @@ class ArticleDetails extends Component {
               <ReactMarkdown 
                   className="markdown-body"
                   skipHtml={true}
-                  renderers={{code: CodeStyle}}
+                  renderers={{
+                    code: CodeStyle,
+                    heading: HeadingBlock
+                  }}
                   source={details.markdown}>
               </ReactMarkdown>
               <div className="article-left-tools">
