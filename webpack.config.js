@@ -15,7 +15,7 @@ module.exports = {
     main: entry
   },
   output: {
-    path: path.resolve('D:/aly/www/build/www'),
+    path: path.resolve('D:/github/boke-api/build/www'),
     filename: '[name].js'
   },
   module: {

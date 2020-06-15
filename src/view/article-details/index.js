@@ -2,12 +2,14 @@ import React, { Component } from 'react';
 import { getArticleDetails, loveArticle, addCommentArticle, delArticle } from '@/js/api.js'
 import { throttle } from '@/common/utils/utils.js'
 import { formatDateTime, getArticleDate } from '@/common/utils/utils.js'
-import { Input, Button, message } from 'antd';
+import { Input, Button, message, Modal } from 'antd';
 import ReactMarkdown from 'react-markdown'
 import CodeStyle from '@/view/edit-article/code-style.js'
 import HeadingBlock from './heading-block.js'
 import '@/common/less/article-details.less'
 import 'github-markdown-css'
+
+const { confirm } = Modal;
 const { TextArea } = Input;
 class ArticleDetails extends Component {
     constructor (props) {
@@ -154,10 +156,31 @@ class ArticleDetails extends Component {
         }
       })
     }
+    delTip (cb, text) {
+      confirm({
+        title: text ? text: '确定删除？',
+        content: '确定要删除吗？',
+        okType: 'danger',
+        cancelText: '取消',
+        okText: '删',
+        onOk: () => {
+          cb()
+        },
+        onCancel() {
+          console.log('Cancel');
+        },
+      });
+    }
     delArticle() {
-      console.log(1234)
-      delArticle({id: this.state.details.id}).then(res => {
-        message.success('删除成功')
+      this.delTip(() => {
+        this.delTip(() => {
+          delArticle({id: this.state.details.id}).then(res => {
+            message.success('删除成功')
+            setTimeout(() => {
+              window.location.href = '/'
+            }, 500)
+          })
+        }, '再次确定？')
       })
     }
     componentDidMount() {
@@ -179,7 +202,7 @@ class ArticleDetails extends Component {
                     <span>{formatDateTime(details.createDate)}</span>
                     <span>阅读: {details.articleReadCountLen || 0}</span>
                     {details.isEdit && <a onClick={this.editArticle}> <b className="article-edit_btn" onClick={this.editArticle}>编辑</b> </a>}
-                    {details.isEdit && <a onClick={this.editArticle}> <b className="article-edit_btn" onClick={this.delArticle}>删除</b> </a>}
+                    {details.isEdit && <a> <b className="article-edit_btn" onClick={this.delArticle}>删除</b> </a>}
                   </p>
                 </div>
               </div>
