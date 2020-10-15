@@ -32,13 +32,13 @@ class Center extends Component {
                             </TabPane>
                             <TabPane tab="" key="2" className="center-box_article">
                                 <ul className="box-article_list">
-                                    <li>人生可以是一条可以不断追逐的路，也可以是一个波澜不惊的河流，但是它不会停止前进</li>
-                                    <li>世界不会停止变化，若干年后。我们还能继续跟上它的步伐吗？</li>
-                                    <li>信仰是人生杠杆的支撑点，具备这个支撑点，才可能成为一个强而有力的人</li>
+                                    <li>这里有一个前端人多年踩坑的一点点记录，和分享，快来一起探讨吧</li>
+                                    <li>本博前后端全部代均以github上传，傻瓜式安装机械式部署，你也想来一个吗？</li>
+                                    <li>我正在搭建一个前端错误日j监控平台，有兴趣一加入吗？</li>
                                 </ul>
                             </TabPane>
                             <TabPane tab="" key="3" className="center-box_article">
-                                我喜欢思考一些社会和哲学相关的问题。热爱生活，喜欢大海。正在看《人类简史》这是一部很有意思的书，推荐————
+                                哲学历史是我的最爱。正在看《人类简史》这是一部很有意思的书，推荐————
                             </TabPane>
                         </Tabs>
                     </div>
